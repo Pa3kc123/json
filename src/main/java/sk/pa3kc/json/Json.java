@@ -71,14 +71,14 @@ public final class Json {
     }
 
     @NotNull
-    public static String createJson(@Nullable Object obj) {
+    public static String createJson(@Nullable Object obj, boolean ignoreNulls) {
         if (obj == null) {
             return "null";
         }
 
         final StringBuilder builder = new StringBuilder();
 
-        Encoder.appendValue(obj, builder);
+        Encoder.appendValue(obj, builder, true);
 
         return builder.toString();
     }

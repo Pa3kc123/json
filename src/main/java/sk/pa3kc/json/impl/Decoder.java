@@ -90,25 +90,32 @@ public class Decoder {
 
             if (isMap || isColl) {
                 final ParameterizedType genType = (ParameterizedType)field.getGenericType();
-                final Type[] genTypes = genType.getActualTypeArguments();
+                final Type compType = genType.getActualTypeArguments()[isMap ? 1 : 0];
 
-                String typeName = genTypes[isMap ? 1 : 0].getTypeName();
+                final Class<?> genClass;
+                if (compType instanceof Class<?>) {
+                    genClass = (Class<?>)compType;
+                } else {
+                    String typeName = compType.getTypeName();
 
-                int counter = 0;
-                while (typeName.endsWith("[]")) {
-                    typeName = typeName.substring(0, typeName.length() - 2);
-                    counter++;
-                }
+                    int counter = 0;
+                    while (typeName.endsWith("[]")) {
+                        typeName = typeName.substring(0, typeName.length() - 2);
+                        counter++;
+                    }
 
-                Class<?> genClass;
-                try {
-                    genClass = Class.forName(typeName);
-                } catch (ClassNotFoundException e) {
-                    throw new JsonException("Unable to find field class " + genTypes[isMap ? 1 : 0].getTypeName());
-                }
+                    Class<?> result;
+                    try {
+                        result = Class.forName(typeName);
+                    } catch (ClassNotFoundException e) {
+                        throw new JsonException("Unable to find field class " + typeName);
+                    }
 
-                for (int i = 0; i < counter; i++) {
-                    genClass = Array.newInstance(genClass, 0).getClass();
+                    for (int i = 0; i < counter; i++) {
+                        result = Array.newInstance(result, 0).getClass();
+                    }
+
+                    genClass = result;
                 }
 
                 setter.invoke(inst, decodeValue(tokener, field.getType(), genClass));
@@ -126,11 +133,11 @@ public class Decoder {
     }
 
     public static <T extends Map> T decodeMap(
-        JsonTokener token,
+        JsonTokener tokener,
         Class<T> mapCls,
         Class<?> valueCls
     ) throws IOException, ReflectiveOperationException {
-        if (token.lastChar() != '{') {
+        if (tokener.lastChar() != '{') {
             throw new JsonException("Invalid start of object");
         }
 
@@ -146,25 +153,25 @@ public class Decoder {
 
         char c;
         do {
-            c = token.nextClearChar();
+            c = tokener.nextClearChar();
 
             if (c != '"') {
                 throw new JsonException("Missing key declaration");
             }
 
-            final String key = decodeString(token);
+            final String key = decodeString(tokener);
 
-            c = token.nextClearChar();
+            c = tokener.nextClearChar();
 
             if (c != ':') {
                 throw new JsonException("Missing semicolon between key and value");
             }
 
-            token.nextClearChar();
+            tokener.nextClearChar();
 
-            map.put(key, decodeValue(token, valueCls, null));
+            map.put(key, decodeValue(tokener, valueCls, null));
 
-            c = token.nextClearChar();
+            c = tokener.nextClearChar();
             if (",}".indexOf(c) == -1) {
                 throw new JsonException("Missing object divider/end (',' or '}')");
             }
@@ -234,38 +241,38 @@ public class Decoder {
     }
 
     static Object decodeValue(
-        @NotNull JsonTokener token,
+        @NotNull JsonTokener tokener,
         @NotNull Class<?> fieldClass,
         @Nullable Class<?> valueClass
     ) throws ReflectiveOperationException, IOException {
-        char c = token.lastChar();
+        char c = tokener.lastChar();
 
         switch (c) {
             case '"':
-                return decodeString(token);
+                return decodeString(tokener);
 
             case 't':
             case 'f':
             case 'n':
-                return decodeBoolOrNull(token);
+                return decodeBoolOrNull(tokener);
 
             case '{':
                 if (Map.class.isAssignableFrom(fieldClass)) {
-                    return decodeMap(token, (Class<? extends Map>) fieldClass, valueClass);
+                    return decodeMap(tokener, (Class<? extends Map>) fieldClass, valueClass);
                 } else {
-                    return decodeObject(token, fieldClass);
+                    return decodeObject(tokener, fieldClass);
                 }
 
             case '[':
                 if (Collection.class.isAssignableFrom(fieldClass)) {
-                    return decodeCollection(token, (Class<? extends Collection>) fieldClass, valueClass);
+                    return decodeCollection(tokener, (Class<? extends Collection>) fieldClass, valueClass);
                 } else {
-                    return decodeArray(token, fieldClass.getComponentType());
+                    return decodeArray(tokener, fieldClass.getComponentType());
                 }
 
             default:
-                if (token.lastChar() == '-' || Character.isDigit(c)) {
-                    return decodeNumber(token);
+                if (tokener.lastChar() == '-' || Character.isDigit(c)) {
+                    return decodeNumber(tokener);
                 } else {
                     throw new JsonException("Invalid char '" + c + "'");
                 }
@@ -273,10 +280,10 @@ public class Decoder {
     }
 
     @NotNull
-    static String decodeString(JsonTokener token) throws IOException {
+    static String decodeString(JsonTokener tokener) throws IOException {
         final StringBuilder builder = new StringBuilder();
 
-        for (char c = token.nextChar(); c != '"' && token.lastChar() != '\\' ; c = token.nextChar()) {
+        for (char c = tokener.nextChar(); c != '"' && tokener.lastChar() != '\\' ; c = tokener.nextChar()) {
             builder.append(c);
         }
 
@@ -284,13 +291,13 @@ public class Decoder {
     }
 
     @Nullable
-    static Boolean decodeBoolOrNull(JsonTokener token) throws IOException {
-        final StringBuilder builder = new StringBuilder(4).append(token.lastChar());
+    static Boolean decodeBoolOrNull(JsonTokener tokener) throws IOException {
+        final StringBuilder builder = new StringBuilder(4).append(tokener.lastChar());
 
-        final int length = token.lastChar() == 'f' ? 5 : 4;
+        final int length = tokener.lastChar() == 'f' ? 5 : 4;
 
         for (int i = 1; i < length; i++) {
-            builder.append(token.nextChar());
+            builder.append(tokener.nextChar());
         }
 
         final String result = builder.toString();
@@ -311,23 +318,23 @@ public class Decoder {
     }
 
     @NotNull
-    static Number decodeNumber(JsonTokener token) throws IOException {
+    static Number decodeNumber(JsonTokener tokener) throws IOException {
         final StringBuilder builder = new StringBuilder();
 
-        char c = token.lastChar();
+        char c = tokener.lastChar();
 
         if (c == '-') {
             builder.append(c);
-            c = token.nextChar();
+            c = tokener.nextChar();
         }
 
         do {
             builder.append(c);
-            c = token.nextChar();
+            c = tokener.nextChar();
         } while (c >= '0' && c <= '9');
 
         if (".eE".indexOf(c) == -1) {
-            token.goBack();
+            tokener.goBack();
             return Long.parseLong(builder.toString());
         }
 
@@ -335,34 +342,34 @@ public class Decoder {
 
         if (isDecimal) {
             builder.append(c);
-            c = token.nextChar();
+            c = tokener.nextChar();
 
             while (c >= '0' && c <= '9') {
                 builder.append(c);
-                c = token.nextChar();
+                c = tokener.nextChar();
             }
         }
 
         if (c == 'e' || c == 'E') {
             builder.append(c);
-            c = token.nextChar();
+            c = tokener.nextChar();
 
             if (c == '+' || c == '-') {
                 if (c == '-') {
                     builder.append(c);
                 }
-                c = token.nextChar();
+                c = tokener.nextChar();
             } else {
                 throw new JsonException("Invalid number");
             }
 
             while (c >= '0' && c <= '9') {
                 builder.append(c);
-                c = token.nextClearChar();
+                c = tokener.nextClearChar();
             }
         }
 
-        token.goBack();
+        tokener.goBack();
         return isDecimal ? Double.parseDouble(builder.toString()) : Long.parseLong(builder.toString());
     }
 }

@@ -21,13 +21,7 @@ public class Test {
         }
 
         final FilePaginator fp = Json.objFromJson(json, FilePaginator.class);
-        final StringBuilder builder = new StringBuilder();
-        for (File f : fp.getFiles()) {
-            builder.append(f.getName()).append('\n');
-        }
-        System.out.println(builder);
-
-        System.out.println(Json.createJson(fp));
+        System.out.println(Json.createJson(fp, true));
     }
 
     public static String loadFile(String name) {

@@ -8,98 +8,98 @@ import sk.pa3kc.json.JsonTokener;
 public class Ignorer {
     private Ignorer() { }
 
-    public static void ignoreValue(JsonTokener token) throws IOException {
-        switch (token.lastChar()) {
+    public static void ignoreValue(JsonTokener tokener) throws IOException {
+        switch (tokener.lastChar()) {
             case '"':
-                ignoreString(token);
+                ignoreString(tokener);
                 return;
 
             case 't':
             case 'f':
             case 'n':
-                ignoreBoolOrNull(token);
+                ignoreBoolOrNull(tokener);
                 return;
 
             case '{':
-                ignoreMap(token);
+                ignoreMap(tokener);
                 return;
 
             case '[':
-                ignoreArray(token);
+                ignoreArray(tokener);
                 return;
 
             default:
-                if (token.lastChar() == '-' || Character.isDigit(token.lastChar())) {
-                    ignoreNumber(token);
+                if (tokener.lastChar() == '-' || Character.isDigit(tokener.lastChar())) {
+                    ignoreNumber(tokener);
                 } else {
-                    throw new JsonException("Invalid char '" + token.lastChar() + "'");
+                    throw new JsonException("Invalid char '" + tokener.lastChar() + "'");
                 }
         }
     }
 
-    public static void ignoreString(JsonTokener token) throws IOException {
-        ignore(token, '"', '"');
+    public static void ignoreString(JsonTokener tokener) throws IOException {
+        ignore(tokener, '"', '"');
     }
-    public static void ignoreBoolOrNull(JsonTokener token) throws IOException {
-        for (int i = token.lastChar() == 'f' ? 5 : 4; i > 0; i--){
-            token.nextChar();
+    public static void ignoreBoolOrNull(JsonTokener tokener) throws IOException {
+        for (int i = tokener.lastChar() == 'f' ? 5 : 4; i > 0; i--){
+            tokener.nextChar();
         }
     }
-    public static void ignoreNumber(JsonTokener token) throws IOException {
-        if (token.lastChar() == '-') {
-            token.nextChar();
+    public static void ignoreNumber(JsonTokener tokener) throws IOException {
+        if (tokener.lastChar() == '-') {
+            tokener.nextChar();
         }
 
         do {
-            token.nextChar();
-        } while (token.lastChar() >= '0' && token.lastChar() <= '9');
+            tokener.nextChar();
+        } while (tokener.lastChar() >= '0' && tokener.lastChar() <= '9');
 
-        if (".eE".indexOf(token.lastChar()) == -1) {
-            token.goBack();
+        if (".eE".indexOf(tokener.lastChar()) == -1) {
+            tokener.goBack();
             return;
         }
 
-        final boolean isDecimal = token.lastChar() == '.';
+        final boolean isDecimal = tokener.lastChar() == '.';
 
         if (isDecimal) {
-            token.nextChar();
+            tokener.nextChar();
 
-            while (token.lastChar() >= '0' && token.lastChar() <= '9') {
-                token.nextChar();
+            while (tokener.lastChar() >= '0' && tokener.lastChar() <= '9') {
+                tokener.nextChar();
             }
         }
 
-        if ("eE".indexOf(token.lastChar()) != -1) {
-            if ("+-".indexOf(token.nextChar()) != -1) {
-                token.nextChar();
+        if ("eE".indexOf(tokener.lastChar()) != -1) {
+            if ("+-".indexOf(tokener.nextChar()) != -1) {
+                tokener.nextChar();
             } else {
                 throw new JsonException("Invalid number");
             }
 
-            while (token.lastChar() >= '0' && token.lastChar() <= '9') {
-                token.nextClearChar();
+            while (tokener.lastChar() >= '0' && tokener.lastChar() <= '9') {
+                tokener.nextClearChar();
             }
         }
 
-        token.goBack();
+        tokener.goBack();
     }
-    public static void ignoreMap(JsonTokener token) throws IOException {
-        ignore(token, '{', '}');
+    public static void ignoreMap(JsonTokener tokener) throws IOException {
+        ignore(tokener, '{', '}');
     }
-    public static void ignoreArray(JsonTokener token) throws IOException {
-        ignore(token, '[', ']');
+    public static void ignoreArray(JsonTokener tokener) throws IOException {
+        ignore(tokener, '[', ']');
     }
-    public static void ignore(JsonTokener token, char b1, char b2) throws IOException {
+    public static void ignore(JsonTokener tokener, char b1, char b2) throws IOException {
         if (b1 != b2) {
             int i = 1;
             do {
-                char c = token.nextClearChar();
+                char c = tokener.nextClearChar();
                 i += c == b1 ? 1 : c == b2 ? -1 : 0;
             } while (i != 0);
         } else {
             char c;
             do {
-                c = token.nextClearChar();
+                c = tokener.nextClearChar();
             } while (c != b1);
         }
     }

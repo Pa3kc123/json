@@ -14,10 +14,26 @@ import sk.pa3kc.json.inter.DecoderFunc;
 
 @SuppressWarnings("rawtypes")
 public class JsonDecoders implements Map<Class<?>, DecoderFunc<?>> {
-    final static JsonDecoders INST;
+    private static JsonDecoders INST;
 
-    static {
-        INST = new JsonDecoders();
+    public static JsonDecoders getInstance() {
+        if (INST == null) {
+            INST = new JsonDecoders();
+
+            JsonDecoders.setDecoder(CharSequence.class, json -> {
+                if (json.charAt(0) != '"' || json.charAt(json.length() - 1) != '"') {
+                    throw new JsonException("Invalid json string");
+                }
+
+                return json.substring(1, json.length() - 1);
+            });
+            JsonDecoders.setDecoder(Iterable.class, json -> null);
+
+            //TODO
+            JsonDecoders.setDecoder(Object.class, json -> null);
+        }
+
+        return INST;
     }
 
     private Class[] keys = new Class[8];
@@ -230,18 +246,18 @@ public class JsonDecoders implements Map<Class<?>, DecoderFunc<?>> {
     }
 
     public static <T> T decode(String json, Class<T> cls) throws JsonException {
-        if (JsonDecoders.INST.containsKey(cls)) {
+        if (JsonDecoders.getInstance().containsKey(cls)) {
             throw new JsonException("No decoder for " + cls.getCanonicalName());
         }
 
-        return ((DecoderFunc<T>)JsonDecoders.INST.get(cls)).decode(json);
+        return ((DecoderFunc<T>)JsonDecoders.getInstance().get(cls)).decode(json);
     }
     public static <T> boolean setDecoder(Class<T> cls, DecoderFunc<T> func) {
-        if (JsonDecoders.INST.containsKey(cls)) {
+        if (JsonDecoders.getInstance().containsKey(cls)) {
             return false;
         }
 
-        JsonDecoders.INST.put(cls, func);
+        JsonDecoders.getInstance().put(cls, func);
 
         return true;
     }

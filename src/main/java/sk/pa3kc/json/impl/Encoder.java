@@ -14,7 +14,7 @@ import sk.pa3kc.json.Utils;
 public class Encoder {
     private Encoder() { }
 
-    public static void encodeArray(Object arr, StringBuilder builder) {
+    public static void encodeArray(Object arr, StringBuilder builder, boolean ignoreNulls) {
         final Class<?> compCls = arr.getClass().getComponentType();
 
         builder.append('[');
@@ -62,7 +62,7 @@ public class Encoder {
             }
         } else {
             for (int i = 0; i < arrLength; i++) {
-                appendValue(Array.get(arr, i), builder);
+                appendValue(Array.get(arr, i), builder, ignoreNulls);
 
                 if (i+1 < arrLength) {
                     builder.append(',');
@@ -73,11 +73,15 @@ public class Encoder {
         builder.append(']');
     }
     public static void encodeIterable(Iterable<?> iter, StringBuilder builder) {
+        //TODO FIX
+        encodeIterable(iter, builder, true);
+    }
+    public static void encodeIterable(Iterable<?> iter, StringBuilder builder, boolean ignoreNulls) {
         builder.append('[');
 
         final Iterator<?> iterator = iter.iterator();
         while (iterator.hasNext()) {
-            appendValue(iterator.next(), builder);
+            appendValue(iterator.next(), builder, ignoreNulls);
 
             if (iterator.hasNext()) {
                 builder.append(',');
@@ -87,6 +91,10 @@ public class Encoder {
         builder.append(']');
     }
     public static void encodeMap(Map<?, ?> map, StringBuilder builder) {
+        //TODO
+        encodeMap(map, builder, true);
+    }
+    public static void encodeMap(Map<?, ?> map, StringBuilder builder, boolean ignoreNulls) {
         builder.append('{');
 
         final Iterator<?> iterator = map.keySet().iterator();
@@ -94,11 +102,15 @@ public class Encoder {
             final Object key = iterator.next();
             final Object value = map.get(key);
 
-            appendValue(key, builder);
+            if (value == null && ignoreNulls) {
+                continue;
+            }
+
+            appendValue(key, builder, ignoreNulls);
 
             builder.append(':');
 
-            appendValue(value, builder);
+            appendValue(value, builder, ignoreNulls);
 
             if (iterator.hasNext()) {
                 builder.append(',');
@@ -107,7 +119,7 @@ public class Encoder {
 
         builder.append('}');
     }
-    public static void encodeObject(Object obj, StringBuilder builder) {
+    public static void encodeObject(Object obj, StringBuilder builder, boolean ignoreNulls) {
         builder.append('{');
 
         final Class<?> cls = obj.getClass();
@@ -130,8 +142,12 @@ public class Encoder {
                 throw new JsonException(getterName + " threw an exception (" + cls.getCanonicalName() + ')', e);
             }
 
+            if (value == null && ignoreNulls) {
+                continue;
+            }
+
             builder.append('"').append(field.getName()).append('"').append(':');
-            appendValue(value, builder);
+            appendValue(value, builder, ignoreNulls);
 
             if (i+1 < fields.length) {
                 builder.append(',');
@@ -141,9 +157,11 @@ public class Encoder {
         builder.append('}');
     }
 
-    public static void appendValue(Object value, StringBuilder builder) {
+    public static void appendValue(Object value, StringBuilder builder, boolean ignoreNulls) {
         if (value == null) {
-            builder.append("null");
+            if (!ignoreNulls) {
+                builder.append("null");
+            }
             return;
         }
 
@@ -169,7 +187,7 @@ public class Encoder {
                     throw new JsonException("Invalid primitive type '" + cls.getCanonicalName() + "'");
             }
         } else {
-            JsonEncoders.encode(value, builder);
+            JsonEncoders.encode(value, builder, ignoreNulls);
         }
     }
 }

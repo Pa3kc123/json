@@ -11,6 +11,8 @@ public class JsonTokener {
     private boolean wentBack = false;
     private char charBefore = '\0';
 
+    private int pos = 0;
+
     public JsonTokener(String src) {
         this(new StringReader(src));
     }
@@ -28,6 +30,7 @@ public class JsonTokener {
         } else {
             this.charBefore = this.lastChar > (char)32 ? this.lastChar : this.charBefore;
             this.lastChar = (char)this.reader.read();
+            this.pos++;
         }
         return this.lastChar;
     }

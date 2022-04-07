@@ -10,13 +10,34 @@ import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import sk.pa3kc.json.impl.Encoder;
 import sk.pa3kc.json.inter.EncoderFunc;
 
-@SuppressWarnings("rawtypes")
 public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
-    private final static JsonEncoders INST = new JsonEncoders();
+    private static JsonEncoders INST;
 
-    private Class[] keys = new Class[8];
+    public static JsonEncoders getInstance() {
+        if (INST == null) {
+            INST = new JsonEncoders();
+
+            JsonEncoders.setEncoder(CharSequence.class, JsonEncoders::encodeText);
+            JsonEncoders.setEncoder(Map.class, Encoder::encodeMap);
+            JsonEncoders.setEncoder(Iterable.class, Encoder::encodeIterable);
+            JsonEncoders.setEncoder(Number.class, JsonEncoders::encodePrimitive);
+            JsonEncoders.setEncoder(Character.class, JsonEncoders::encodeText);
+            JsonEncoders.setEncoder(Boolean.class, JsonEncoders::encodePrimitive);
+            JsonEncoders.setEncoder(Object.class, (val, builder) -> {
+                if (val.getClass().isArray()) {
+                    Encoder.encodeArray(val, builder, true);
+                } else {
+                    Encoder.encodeObject(val, builder, true);
+                }
+            });
+        }
+        return INST;
+    }
+
+    private Class<?>[] keys = new Class<?>[8];
     private EncoderFunc<?>[] values = new EncoderFunc<?>[8];
 
     private int index = 0;
@@ -37,8 +58,8 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
             return false;
         }
 
-        for (int i = 0; i < this.index; i++) {
-            if (key.equals(this.keys[i])) {
+        for (Class<?> cls : this.keys) {
+            if (cls.isAssignableFrom((Class<?>)key)) {
                 return true;
             }
         }
@@ -48,7 +69,7 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
 
     @Override
     public boolean containsValue(Object value) {
-        if (!(value instanceof EncoderFunc<?>)) {
+        if (!(value instanceof EncoderFunc)) {
             return false;
         }
 
@@ -61,7 +82,6 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public EncoderFunc<?> get(Object key) {
         if (!(key instanceof Class)) {
@@ -83,7 +103,7 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
         EncoderFunc<?> previous = null;
         int index = 0;
         for (int i = 0; i < this.index; i++, index++) {
-            if (key.equals(this.keys[i])) {
+            if (this.keys[i].isAssignableFrom(key)) {
                 previous = this.values[i];
                 index = i;
                 break;
@@ -204,7 +224,7 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
                 newSize *= 2;
             }
 
-            final Class[] keys = new Class[newSize];
+            final Class<?>[] keys = new Class<?>[newSize];
             System.arraycopy(this.keys, 0, keys, 0, this.keys.length);
             this.keys = keys;
 
@@ -214,22 +234,45 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
         }
     }
 
-    public static <T> void encode(T o, StringBuilder builder) throws JsonException {
+    public static <T> void encode(@Nullable T o, StringBuilder builder, boolean ignoreNulls) throws JsonException {
+        if (o == null) {
+            if (!ignoreNulls) {
+                builder.append("null");
+            }
+            return;
+        }
         final Class<T> cls = (Class<T>) o.getClass();
 
-        if (JsonEncoders.INST.containsKey(cls)) {
-            throw new JsonException("No encoder for " + cls.getCanonicalName());
-        }
+        final EncoderFunc<T> func = (EncoderFunc<T>) JsonEncoders.getInstance().get(cls);
 
-        ((EncoderFunc<T>) JsonEncoders.INST.get(cls)).encode(o, builder);
+        if (func != null) {
+            func.encode(o, builder);
+        } else {
+            if (Iterable.class.isAssignableFrom(cls)) {
+                Encoder.encodeIterable((Iterable<?>)o, builder, ignoreNulls);
+            } else if (Map.class.isAssignableFrom(cls)) {
+                Encoder.encodeMap((Map<?,?>)o, builder, ignoreNulls);
+            } else if (cls.isArray()) {
+                Encoder.encodeArray(o, builder, ignoreNulls);
+            } else {
+                Encoder.encodeObject(o, builder, ignoreNulls);
+            }
+        }
     }
     public static <T> boolean setEncoder(Class<T> cls, EncoderFunc<T> func) {
-        if (JsonEncoders.INST.containsKey(cls)) {
+        if (JsonEncoders.getInstance().containsKey(cls)) {
             return false;
         }
 
-        JsonEncoders.INST.put(cls, func);
+        JsonEncoders.getInstance().put(cls, func);
 
         return true;
+    }
+
+    private static void encodePrimitive(Object val, StringBuilder builder) {
+        builder.append(val);
+    }
+    private static void encodeText(Object val, StringBuilder builder) {
+        builder.append('"').append(val).append('"');
     }
 }
