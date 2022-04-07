@@ -16,11 +16,11 @@ import sk.pa3kc.json.ann.JsonKey;
 import sk.pa3kc.json.ann.JsonOptions;
 import sk.pa3kc.json.ann.JsonSuperclass;
 
-final class Utils {
+public final class Utils {
     private Utils() {}
 
     @NotNull
-    static String capitalize(@NotNull String src) {
+    public static String capitalize(@NotNull String src) {
         if (src.length() == 0) {
             return src;
         }
@@ -28,11 +28,11 @@ final class Utils {
         return src.substring(0, 1).toUpperCase().concat(src.substring(1));
     }
 
-    static boolean isValidSuperclass(@Nullable Class<?> cls) {
+    public static boolean isValidSuperclass(@Nullable Class<?> cls) {
         return cls != null && cls.getAnnotation(JsonSuperclass.class) != null;
     }
 
-    static Field[] getInheritedFields(Class<?> cls) {
+    public static Field[] getInheritedFields(Class<?> cls) {
         final List<Field> list = new ArrayList<>(Arrays.asList(cls.getDeclaredFields()));
 
         for (
@@ -47,7 +47,7 @@ final class Utils {
     }
 
     @NotNull
-    static <T> T createInstance(@NotNull Class<T> cls) {
+    public static <T> T createInstance(@NotNull Class<T> cls) {
         try {
             final T inst = cls.getConstructor().newInstance();
             return inst;
@@ -75,7 +75,7 @@ final class Utils {
         }
     }
     @NotNull
-    static Map<String, Field> getFields(@NotNull Class<?> cls, @Nullable JsonOptions options) {
+    public static Map<String, Field> getFields(@NotNull Class<?> cls, @Nullable JsonOptions options) {
         final Map<String, Field> map = new HashMap<>();
 
         for (Field f : cls.getDeclaredFields()) {

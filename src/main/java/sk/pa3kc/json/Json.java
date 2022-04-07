@@ -1,18 +1,15 @@
 package sk.pa3kc.json;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings({"unused"})
+import sk.pa3kc.json.impl.Decoder;
+import sk.pa3kc.json.impl.Encoder;
+
 public final class Json {
     private Json() { }
 
@@ -25,7 +22,7 @@ public final class Json {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
             tokener.nextChar();
-            return JsonDecoder.decodeObject(tokener, cls);
+            return Decoder.decodeObject(tokener, cls);
         } catch (IOException|ReflectiveOperationException e) {
             throw new JsonException(e);
         }
@@ -39,7 +36,7 @@ public final class Json {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
             tokener.nextChar();
-            return JsonDecoder.decodeArray(tokener, cls);
+            return Decoder.decodeArray(tokener, cls);
         } catch (IOException|ReflectiveOperationException e) {
             throw new JsonException(e);
         }
@@ -53,7 +50,7 @@ public final class Json {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
             tokener.nextChar();
-            return JsonDecoder.decodeCollection(tokener, collCls, cls);
+            return Decoder.decodeCollection(tokener, collCls, cls);
         } catch (IOException|ReflectiveOperationException e) {
             throw new JsonException(e);
         }
@@ -67,7 +64,7 @@ public final class Json {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
             tokener.nextChar();
-            return JsonDecoder.decodeMap(tokener, mapCls, cls);
+            return Decoder.decodeMap(tokener, mapCls, cls);
         } catch (IOException|ReflectiveOperationException e) {
             throw new JsonException(e);
         }
@@ -81,7 +78,7 @@ public final class Json {
 
         final StringBuilder builder = new StringBuilder();
 
-        JsonEncoder.appendValue(obj, builder);
+        Encoder.appendValue(obj, builder);
 
         return builder.toString();
     }

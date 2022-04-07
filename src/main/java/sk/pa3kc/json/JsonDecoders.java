@@ -42,7 +42,7 @@ public class JsonDecoders implements Map<Class<?>, DecoderFunc<?>> {
         }
 
         for (int i = 0; i < this.index; i++) {
-            if (key.equals(this.keys[i])) {
+            if (this.keys[i].isAssignableFrom((Class<?>) key)) {
                 return true;
             }
         }
@@ -71,17 +71,23 @@ public class JsonDecoders implements Map<Class<?>, DecoderFunc<?>> {
             return null;
         }
 
-        Class<?> cls;
         for (int i = 0; i < this.index; i++) {
-            cls = this.keys[i];
-            while (cls != Object.class) {
-                if (key.equals(cls)) {
-                    return this.values[i];
-                }
-
-                cls = cls.getSuperclass();
+            if (this.keys[i].isAssignableFrom((Class) key)) {
+                return this.values[i];
             }
         }
+
+        // Class<?> cls;
+        // for (int i = 0; i < this.index; i++) {
+        //     cls = this.keys[i];
+        //     while (cls != Object.class) {
+        //         if (key.equals(cls)) {
+        //             return this.values[i];
+        //         }
+
+        //         cls = cls.getSuperclass();
+        //     }
+        // }
 
         return null;
     }
@@ -223,7 +229,14 @@ public class JsonDecoders implements Map<Class<?>, DecoderFunc<?>> {
         }
     }
 
-    public static <T> boolean addDecoder(Class<T> cls, DecoderFunc<T> func) {
+    public static <T> T decode(String json, Class<T> cls) throws JsonException {
+        if (JsonDecoders.INST.containsKey(cls)) {
+            throw new JsonException("No decoder for " + cls.getCanonicalName());
+        }
+
+        return ((DecoderFunc<T>)JsonDecoders.INST.get(cls)).decode(json);
+    }
+    public static <T> boolean setDecoder(Class<T> cls, DecoderFunc<T> func) {
         if (JsonDecoders.INST.containsKey(cls)) {
             return false;
         }

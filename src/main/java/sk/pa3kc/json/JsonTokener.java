@@ -11,14 +11,14 @@ public class JsonTokener {
     private boolean wentBack = false;
     private char charBefore = '\0';
 
-    JsonTokener(String src) {
+    public JsonTokener(String src) {
         this(new StringReader(src));
     }
-    JsonTokener(Reader reader) {
+    public JsonTokener(Reader reader) {
         this.reader = reader;
     }
 
-    char nextChar() throws IOException {
+    public char nextChar() throws IOException {
         if (this.wentBack) {
             this.wentBack = false;
 
@@ -32,7 +32,7 @@ public class JsonTokener {
         return this.lastChar;
     }
 
-    char nextClearChar() throws IOException {
+    public char nextClearChar() throws IOException {
         for (char c = nextChar(); true; c = nextChar()) {
             if (c == '\0' || c > (char)32) {
                 this.lastChar = c;
@@ -41,11 +41,11 @@ public class JsonTokener {
         }
     }
 
-    char lastChar() {
+    public char lastChar() {
         return this.lastChar;
     }
 
-    void goBack() {
+    public void goBack() {
         if (this.wentBack) {
             throw new IllegalStateException("Already went back once");
         }

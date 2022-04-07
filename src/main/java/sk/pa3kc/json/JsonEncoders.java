@@ -14,14 +14,10 @@ import sk.pa3kc.json.inter.EncoderFunc;
 
 @SuppressWarnings("rawtypes")
 public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
-    final static JsonEncoders INST;
-
-    static {
-        INST = new JsonEncoders();
-    }
+    private final static JsonEncoders INST = new JsonEncoders();
 
     private Class[] keys = new Class[8];
-    private EncoderFunc[] values = new EncoderFunc[8];
+    private EncoderFunc<?>[] values = new EncoderFunc<?>[8];
 
     private int index = 0;
 
@@ -212,13 +208,22 @@ public class JsonEncoders implements Map<Class<?>, EncoderFunc<?>> {
             System.arraycopy(this.keys, 0, keys, 0, this.keys.length);
             this.keys = keys;
 
-            final EncoderFunc[] values = new EncoderFunc[newSize];
+            final EncoderFunc<?>[] values = new EncoderFunc<?>[newSize];
             System.arraycopy(this.values, 0, values, 0, this.values.length);
             this.values = values;
         }
     }
 
-    public static <T> boolean addEncoder(Class<T> cls, EncoderFunc<T> func) {
+    public static <T> void encode(T o, StringBuilder builder) throws JsonException {
+        final Class<T> cls = (Class<T>) o.getClass();
+
+        if (JsonEncoders.INST.containsKey(cls)) {
+            throw new JsonException("No encoder for " + cls.getCanonicalName());
+        }
+
+        ((EncoderFunc<T>) JsonEncoders.INST.get(cls)).encode(o, builder);
+    }
+    public static <T> boolean setEncoder(Class<T> cls, EncoderFunc<T> func) {
         if (JsonEncoders.INST.containsKey(cls)) {
             return false;
         }
