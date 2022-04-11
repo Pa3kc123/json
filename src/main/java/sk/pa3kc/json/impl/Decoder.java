@@ -3,6 +3,7 @@ package sk.pa3kc.json.impl;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -10,19 +11,172 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jetbrains.annotations.NonBlocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import sk.pa3kc.json.JsonDecoders;
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
+import sk.pa3kc.json.ReflectUtils;
 import sk.pa3kc.json.Utils;
 import sk.pa3kc.json.ann.JsonOptions;
 
 public class Decoder {
     private Decoder() { }
+
+    @NotNull
+    public static <T> T decodeObj(
+        JsonTokener tokener,
+        Class<T> rCls
+    ) throws IOException, JsonException {
+        if (tokener.lastChar() != '{') {
+            throw new JsonException("Invalid start of object");
+        }
+
+        final Map<String, Field> fieldMap = Utils.getFields(rCls, null);
+        for (Class<?> mCls = rCls.getSuperclass(); Utils.isValidSuperclass(mCls); mCls = mCls.getSuperclass()) {
+            fieldMap.putAll(Utils.getFields(mCls, null));
+        }
+
+        final T inst = Utils.createInstance(rCls);
+
+        if (fieldMap.isEmpty()) {
+            if (tokener.nextClearChar() != '}') {
+                throw new JsonException("Invalid end of empty object");
+            }
+
+            return inst;
+        }
+
+        char c;
+        do {
+            c = tokener.nextClearChar();
+            if (c != '"') {
+                throw new JsonException("Missing key declaration");
+            }
+
+            final String key = decodeString(tokener);
+            final Field field = fieldMap.get(key);
+
+            c = tokener.nextClearChar();
+
+            if (c != ':') {
+                throw new JsonException("Missing semicolon between key and value");
+            }
+
+            tokener.nextClearChar();
+
+            if (field == null) {
+                final JsonOptions options = rCls.getAnnotation(JsonOptions.class);
+                if (options == null || !options.ignoreMissing()) {
+                    throw new JsonException(rCls.getCanonicalName() + " is missing field for json key '" + key + "'");
+                }
+
+                Ignorer.ignoreValue(tokener);
+
+                c = tokener.nextClearChar();
+                if (",}".indexOf(c) == -1) {
+                    throw new JsonException("Missing object divider or end (',' or '}')");
+                }
+
+                continue;
+            }
+
+            final Method setter = ReflectUtils.getSetter(rCls, field);
+            final Type t = field.getGenericType();
+
+            try {
+                if (t instanceof ParameterizedType) {
+                    final Type[] args = ((ParameterizedType)t).getActualTypeArguments();
+                    setter.invoke(inst, JsonDecoders.decode(tokener, (Class<?>)t, (Class<?>)args[args.length - 1]));
+                } else {
+                    setter.invoke(inst, JsonDecoders.decode(tokener, (Class<?>)t, null));
+                }
+            } catch (IllegalAccessException e) {
+                throw new JsonException("Unable to access " + rCls.getCanonicalName() + "#" + setter.getName(), e);
+            } catch (InvocationTargetException e) {
+                throw new JsonException("Invocation of " + rCls.getCanonicalName() + "#" + setter.getName() + " threw an exception", e);
+            }
+
+            c = tokener.nextClearChar();
+            if (",}".indexOf(c) == -1) {
+                throw new JsonException("Missing object divider/end (',' or '}')");
+            }
+        } while (c != '}');
+
+        return inst;
+    }
+
+    @NotNull
+    public static <T> T[] decodeArr(
+        JsonTokener tokener,
+        Class<T> rCls
+    ) throws IOException {
+        if (tokener.lastChar() != '[') {
+            throw new JsonException("Invalid start of array");
+        }
+
+        final List<T> result = new ArrayList<>();
+
+        char c;
+        do {
+            tokener.nextClearChar();
+            final T value = (T) JsonDecoders.decode(tokener, rCls, null);
+            result.add(value);
+
+            c = tokener.nextClearChar();
+            if (",]".indexOf(c) == -1) {
+                throw new JsonException("Missing array divider/end (',' or ']')");
+            }
+        } while (c != ']');
+
+        return result.toArray((T[])Array.newInstance(rCls, 0));
+    }
+
+    @NotNull
+    public static <T extends Iterable<G>, G> T decodeIter(
+        JsonTokener tokener,
+        Class<T> rCls,
+        Class<G> gCls
+    ) {
+        if (tokener.lastChar() != '[') {
+            throw new JsonException("Invalid start of array");
+        }
+
+        if (Modifier.isInterface(rCls.getModifiers())) {
+            if (List.class.isAssignableFrom(rCls)) {
+
+            }
+
+            rCls = (Class<T>) ArrayList.class;
+        }
+
+        if (Modifier.isAbstract(rCls.getModifiers())) {
+            throw new JsonException("Unable to instantiate abstract class");
+        }
+
+        final T result = Utils.createInstance(rCls);
+
+        char c;
+        do {
+            tokener.nextClearChar();
+            final G value = JsonDecoders.decode(tokener, gCls, null);
+            result.add(value);
+
+            c = tokener.nextClearChar();
+            if (",]".indexOf(c) == -1) {
+                throw new JsonException("Missing array divider/end (',' or ']')");
+            }
+        } while (c != ']');
+
+
+        return result;
+    }
 
     @NotNull
     public static <T> T decodeObject(
@@ -90,13 +244,14 @@ public class Decoder {
 
             if (isMap || isColl) {
                 final ParameterizedType genType = (ParameterizedType)field.getGenericType();
-                final Type compType = genType.getActualTypeArguments()[isMap ? 1 : 0];
+                final Type genTypes = genType.getActualTypeArguments()[isMap ? 1 : 0];
 
-                final Class<?> genClass;
-                if (compType instanceof Class<?>) {
-                    genClass = (Class<?>)compType;
+                Class<?> genClass;
+
+                if (genTypes instanceof Class) {
+                    genClass = (Class<?>)genTypes;
                 } else {
-                    String typeName = compType.getTypeName();
+                    String typeName = genTypes.getTypeName();
 
                     int counter = 0;
                     while (typeName.endsWith("[]")) {
@@ -120,7 +275,11 @@ public class Decoder {
 
                 setter.invoke(inst, decodeValue(tokener, field.getType(), genClass));
             } else {
-                setter.invoke(inst, decodeValue(tokener, field.getType(), null));
+                try {
+                    setter.invoke(inst, decodeValue(tokener, field.getType(), null));
+                } catch (IllegalArgumentException e) {
+                    throw new JsonException("Argument type mismatch: " + cls.getCanonicalName() + "#" + setter.getName() + "(" + setter.getParameterTypes()[0] + ") with type" + field.getType().getCanonicalName(), e);
+                }
             }
 
             c = tokener.nextClearChar();

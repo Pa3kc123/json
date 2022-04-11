@@ -22,8 +22,9 @@ public final class Json {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
             tokener.nextChar();
-            return Decoder.decodeObject(tokener, cls);
-        } catch (IOException|ReflectiveOperationException e) {
+            return JsonDecoders.decode(tokener, cls, null);
+            // return Decoder.decodeObject(tokener, cls);
+        } catch (IOException e) {
             throw new JsonException(e);
         }
     }

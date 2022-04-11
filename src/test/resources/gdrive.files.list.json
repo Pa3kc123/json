@@ -13,7 +13,8 @@
       "kind": "drive#file",
       "id": "1ZjsAIyvO-DFThqmsXY-pKIKZ4Nd0UnRr",
       "name": "4R10001-720.mp4",
-      "mimeType": "video/mp4"
+      "mimeType": "video/mp4",
+      "size": 42069
     },
     {
       "kind": "drive#file",

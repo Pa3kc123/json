@@ -1,6 +1,7 @@
 package sk.pa3kc.data;
 
 import java.util.Map;
+import java.math.BigInteger;
 import java.util.List;
 
 import lombok.Data;
@@ -73,7 +74,7 @@ public @Data class File {
     /** The MD5 checksum for the content of the file. This is only applicable to files with binary content in Google Drive. */
     private String md5Checksum;
     /** The size of the file's content in bytes. This is applicable to binary files in Google Drive and Google Docs files. */
-    private Long size;
+    private BigInteger size;
     /** The number of storage quota bytes used by the file. This includes the head revision as well as previous revisions with keepForever enabled. */
     private Long quotaBytesUsed;
     /** The ID of the file's head revision. This is currently only available for files with binary content in Google Drive. */
@@ -375,11 +376,11 @@ public @Data class File {
         this.md5Checksum = md5Checksum;
     }
 
-    public Long getSize() {
+    public BigInteger getSize() {
         return size;
     }
 
-    public void setSize(Long size) {
+    public void setSize(BigInteger size) {
         this.size = size;
     }
 
