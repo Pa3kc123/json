@@ -4,15 +4,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Field;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
-import sk.pa3kc.data.File;
-import sk.pa3kc.data.FilePaginator;
 import sk.pa3kc.json.Json;
+
+class X {
+    public String[] lists;
+}
 
 public class Test {
     public static void main(String[] args) throws Exception {
-        final String name = "gdrive.files.list.json";
+        final String name = "test_get_about.json";
 
         final String json = loadFile(name);
 
@@ -20,12 +26,7 @@ public class Test {
             return;
         }
 
-        final FilePaginator fp = Json.objFromJson(json, FilePaginator.class);
-        // final StringBuilder builder = new StringBuilder();
-        // for (File f : fp.getFiles()) {
-        //     builder.append(f.getName()).append('\n');
-        // }
-        // System.out.println(builder);
+        final TestGetAbout tga = Json.fromJson(json, TestGetAbout.class);
 
         System.out.println("Done");
     }

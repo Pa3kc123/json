@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JsonOptions {
+    @Deprecated
     boolean ignoreMissing() default false;
+    boolean strict() default false;
     boolean useFieldNameAsKey() default true;
 }
