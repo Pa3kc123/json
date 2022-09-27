@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import javax.swing.DefaultBoundedRangeModel;
-
 public class JsonTokener {
     private final Reader reader;
     private char lastChar = '\0';
 
     private boolean wentBack = false;
     private char charBefore = '\0';
-
-    private int pos = 0;
 
     public JsonTokener(String src) {
         this(new StringReader(src));
@@ -32,14 +28,13 @@ public class JsonTokener {
         } else {
             this.charBefore = Character.isWhitespace(this.lastChar) ? this.lastChar : this.charBefore;
             this.lastChar = (char)this.reader.read();
-            this.pos++;
         }
         return this.lastChar;
     }
 
     public char nextClearChar() throws IOException {
         char c;
-        while (Character.isWhitespace((c = nextChar())));
+        do c = nextChar(); while (Character.isWhitespace(c));
         this.lastChar = c;
         return this.lastChar;
     }
@@ -133,13 +128,9 @@ public class JsonTokener {
 
         switch (c) {
             case '"':
-                while (true) {
+                do {
                     c = nextChar();
-
-                    if (c == '"' && this.lastChar != '\\') {
-                        break;
-                    }
-                }
+                } while (c == '"' && this.lastChar != '\\');
                 break;
 
             case '{': {
@@ -171,8 +162,8 @@ public class JsonTokener {
                     }
 
                     if (!isInString) {
-                        if (c == '{') counter++;
-                        if (c == '}') counter--;
+                        if (c == '[') counter++;
+                        if (c == ']') counter--;
                     }
                 } while (counter != 0);
                 break;
@@ -181,8 +172,7 @@ public class JsonTokener {
             case 't':
             case 'f':
             case 'n':
-                int length = c == 'f' ? 4 : 3;
-                for (int i = 0; i < length; i++) {
+                for (int i = 0; i < (c == 'f' ? 4 : 3); i++) {
                     nextChar();
                 }
                 break;

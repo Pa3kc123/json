@@ -1,0 +1,1223 @@
+{
+  "issues": [
+    {
+      "id": 4505,
+      "project": {
+        "id": 285,
+        "name": "NTS"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 5,
+        "name": "Immediate"
+      },
+      "author": {
+        "id": 60,
+        "name": "Adam Polák"
+      },
+      "assigned_to": {
+        "id": 26,
+        "name": "Antony Šuranský"
+      },
+      "subject": "Chyba pri vkladaní prílohy k FTM",
+      "description": "Pri pokuse uložiť prílohu (PDF súbor) k FTM správe, po kliknutí na tlačidlo \"Uložiť\" na obrazovke \"Príloha\" aplikácia vypíše chybu (screenshot v prílohe) a obsah poľa \"Súbor\" (cesta k prikladanému súboru) sa vymaže.\r\n\r\nV piatok 20.11.2020, keď som naposledy publikoval FTM, fungovalo všetko bez problémov. Robili ste odvtedy nejaké zmeny v aplikácii?\r\n\r\nProsím opraviť chybu, potrebujem urgentne publikovať FTM aj s prílohou.",
+      "start_date": "2020-11-26",
+      "due_date": null,
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "0.0"
+        }
+      ],
+      "created_on": "2020-11-26T10:38:53Z",
+      "updated_on": "2020-11-26T10:59:45Z",
+      "closed_on": null
+    },
+    {
+      "id": 4796,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Online kurz PostgreSql II. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-ii-mierne-pokrocily/",
+      "start_date": "2022-02-07",
+      "due_date": "2022-03-31",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19081.916666666668"
+        }
+      ],
+      "created_on": "2022-02-02T15:31:23Z",
+      "updated_on": "2022-04-25T06:25:56Z",
+      "closed_on": null
+    },
+    {
+      "id": 4797,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 64,
+        "name": "Peter Murín"
+      },
+      "subject": "Online kurz PostgreSql II. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-ii-mierne-pokrocily/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-04-30",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19111.916666666668"
+        }
+      ],
+      "created_on": "2022-02-02T15:31:52Z",
+      "updated_on": "2022-04-25T07:43:59Z",
+      "closed_on": null
+    },
+    {
+      "id": 4801,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Online kurz PostgreSql III. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-iii-pokrocily/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-06-30",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19172.916666666668"
+        }
+      ],
+      "created_on": "2022-02-02T15:33:36Z",
+      "updated_on": "2022-07-11T07:19:56Z",
+      "closed_on": null
+    },
+    {
+      "id": 4800,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 64,
+        "name": "Peter Murín"
+      },
+      "subject": "Online kurz PostgreSql III. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-iii-pokrocily/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-07-31",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19203.916666666668"
+        }
+      ],
+      "created_on": "2022-02-02T15:33:15Z",
+      "updated_on": "2022-06-29T10:24:51Z",
+      "closed_on": null
+    },
+    {
+      "id": 4802,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 2,
+        "name": "In Progress"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Online kurz PostgreSql IV. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-iv-optimalizacia-dopytov/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-09-30",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19264.916666666668"
+        }
+      ],
+      "created_on": "2022-02-02T15:34:23Z",
+      "updated_on": "2022-07-11T07:20:05Z",
+      "closed_on": null
+    },
+    {
+      "id": 4803,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 64,
+        "name": "Peter Murín"
+      },
+      "subject": "Online kurz PostgreSql IV. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-iv-optimalizacia-dopytov/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-10-31",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19295.958333333332"
+        }
+      ],
+      "created_on": "2022-02-02T15:34:36Z",
+      "updated_on": "2022-09-27T07:06:22Z",
+      "closed_on": null
+    },
+    {
+      "id": 4804,
+      "project": {
+        "id": 308,
+        "name": "Kurzy, školenia"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 24,
+        "name": "Róbert Durdík",
+        "avatar_urls": {
+          "original": "/images/easy_images/easy_avatars/24/original/TuxKnife.jpg?1615971236",
+          "large": "/images/easy_images/easy_avatars/24/large/TuxKnife.jpg?1615971236",
+          "medium": "/images/easy_images/easy_avatars/24/medium/TuxKnife.jpg?1615971236",
+          "small": "/images/easy_images/easy_avatars/24/small/TuxKnife.jpg?1615971236"
+        }
+      },
+      "subject": "Online kurz PostgreSql IV. - štúdium ukončené úspešnou certifikáciou",
+      "description": "https://www.vita.sk/online-kurz-postgresql-iv-optimalizacia-dopytov/",
+      "start_date": "2021-10-12",
+      "due_date": "2022-10-31",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19295.958333333332"
+        }
+      ],
+      "created_on": "2022-02-02T15:34:47Z",
+      "updated_on": "2022-02-07T08:25:01Z",
+      "closed_on": null
+    },
+    {
+      "id": 4188,
+      "project": {
+        "id": 259,
+        "name": "Slovris - interné úlohy"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 60,
+        "name": "Adam Polák"
+      },
+      "assigned_to": {
+        "id": 60,
+        "name": "Adam Polák"
+      },
+      "subject": "Cezhraničná výmena údajov",
+      "description": "Všimol som si, že od 10.7.2019 je nejaký problém s cezhraničnou výmenou údajov (R2D2).\r\nFunguje len výmena správ (Not_Alive) s maďarským RIS.\r\nZ/do ostatných krajín (AT,RO) niektoré správy nechodia vôbec (resp. nevidím žiadne v histórii odoslaných/prijatých správ - napr. Not_Alive) alebo končia v stave \"Chyba\", \"Nespracovaná\" alebo \"Uplynul limit\".\r\n\r\nViete o tomto probléme, riešite ho?",
+      "start_date": "2019-07-18",
+      "due_date": null,
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "0.0"
+        }
+      ],
+      "created_on": "2019-07-18T09:57:29Z",
+      "updated_on": "2019-07-22T14:06:07Z",
+      "closed_on": null
+    },
+    {
+      "id": 4473,
+      "project": {
+        "id": 259,
+        "name": "Slovris - interné úlohy"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 60,
+        "name": "Adam Polák"
+      },
+      "assigned_to": {
+        "id": 15,
+        "name": "Ivan Konečný",
+        "avatar_urls": {
+          "original": "/images/easy_images/easy_avatars/17/original/ja.jpg?1415971736",
+          "large": "/images/easy_images/easy_avatars/17/large/ja.jpg?1415971736",
+          "medium": "/images/easy_images/easy_avatars/17/medium/ja.jpg?1415971736",
+          "small": "/images/easy_images/easy_avatars/17/small/ja.jpg?1415971736"
+        }
+      },
+      "subject": "RGO RIS viewer nezobrazuje plavidlá",
+      "description": "RGO RIS viewer nezobrazuje plavidlá - zdroj AIS odpojený (screenshot v prílohe).\r\n\r\n\r\nAhoj Ivan,\r\nprosím o preverenie požiadavky pána Chalupku.\r\n\r\nĎakujem",
+      "start_date": "2020-09-28",
+      "due_date": null,
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "0.0"
+        }
+      ],
+      "created_on": "2020-09-28T06:30:25Z",
+      "updated_on": "2021-02-15T07:07:52Z",
+      "closed_on": null
+    },
+    {
+      "id": 4859,
+      "project": {
+        "id": 163,
+        "name": "Vývoj SW - úlohy všeobecné"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "ZApisovanie odpracovaných hodín k úlohám",
+      "description": "úlohy, ktoré máš v Redmine, keď na nich začneš pracovať označ ich ndo stavu In Progress . \r\nKeď bude úloha dokončená, označ ako vyriešená. \r\n\r\nVykazuj si každý deň odpracované hodiny na každej úlohe, samozrejme vrátane úloh, ktoré sú k štúdiu rôznych problematík. \r\nDo poznámky vykázaného času uveď aj popis, čo si práve v rámci úlohy riešil.\r\n\r\nAk by Ti nejaká úloha, na ktorej pracuješ v Redmine chýbala, daj vedieť, zapíšem ...",
+      "start_date": "2022-03-24",
+      "due_date": null,
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "0.0"
+        }
+      ],
+      "created_on": "2022-03-24T11:10:49Z",
+      "updated_on": "2022-03-24T11:10:49Z",
+      "closed_on": null
+    },
+    {
+      "id": 4729,
+      "project": {
+        "id": 303,
+        "name": "Scorabble Android"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Zmeny v Android verzii Scorabble ",
+      "description": "Uloha je vytvorit dokument, v ktorom budu popisane zmeny, ktore sa v Android verzii robili od 02.2019 vratane.\r\nDo dokumentu treba uviest popis funkcionality pripadne aj s obrazovkou, pokial sa zmena tykala UI.\r\nIde o to, aby chalani vedeli zmeny dopracovat do iOS verzie.\r\n\r\nDokument zmien uz v minulosti Pripravoval Viliam Durina.\r\nJe ulozeny t:\\klienti\\KIOS\\Scrabble\\podklady\\Scorabble zadanie.docx\r\n\r\nVytvor z dokumentu novu verziu a pokracuj v nom v zacatom duchu.\r\n\r\nPokiall ide len o opravu chyby v Android verzii, tak to nas nezaujima. Zaujimaju nas ucelene funkcionality ako napr. uprava so slovnikmi, co si robil naposledy.\r\nVilo Durina mohol tiez nieco ucelene robit a nevieme o tom.\r\nTAkze ide o to, dat vsetky potrebne informacie dokopy. Vratane suborov, z ktorych si napr. vychal atd. Jednoducho vsetky potrebne informacie\r\n\r\n\r\n",
+      "start_date": "2021-11-15",
+      "due_date": "2021-11-16",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 4,
+          "name": "Deployed date",
+          "internal_name": null,
+          "field_format": "date",
+          "value": ""
+        },
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "18946.958333333332"
+        }
+      ],
+      "created_on": "2021-11-15T12:04:27Z",
+      "updated_on": "2021-11-16T15:35:20Z",
+      "closed_on": null
+    },
+    {
+      "id": 4741,
+      "project": {
+        "id": 251,
+        "name": "SLA MASP/VK"
+      },
+      "tracker": {
+        "id": 3,
+        "name": "Support"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 24,
+        "name": "Róbert Durdík",
+        "avatar_urls": {
+          "original": "/images/easy_images/easy_avatars/24/original/TuxKnife.jpg?1615971236",
+          "large": "/images/easy_images/easy_avatars/24/large/TuxKnife.jpg?1615971236",
+          "medium": "/images/easy_images/easy_avatars/24/medium/TuxKnife.jpg?1615971236",
+          "small": "/images/easy_images/easy_avatars/24/small/TuxKnife.jpg?1615971236"
+        }
+      },
+      "subject": "UPVS - PROD - IAM - OZNAMENIE - WebSSO - Nové metadáta IDP ",
+      "description": "Vážení používatelia portálu slovensko.sk,\r\n \r\ndovoľujeme si Vás ako integračného partnera/dodávateľa informovať o blížiacej sa exspirácii IDP certifikátu (X509) obsiahnutého v Metadátach IDP na produkčnom prostredí Ústredného portálu verejnej správy.  \r\nZmena sa dotkne integračných partnerov, ktorí využívajú službu Web SSO.\r\n \r\nV súlade s obnovou príslušného certifikátu bude potrebné pre Vás, ako subjekt vystupujúci v roli Service Providera, importovať si do Vášho systému aktualizované IDP metadáta.\r\n \r\nAktuálnym Metadátam IDP dostupným na adrese:\r\n \r\n•      https://prihlasenie.slovensko.sk/oamfed/idp/metadata a rovnako aj v nich obsiahnutému IDP (X509) certifikátu uplynie platnosť 18. 01. 2022 o 10:45:39 h. \r\n\r\nDňa 15. 01. 2022 o 20.00 h budú tieto „staré“ metadáta nahradené za nové s novým IDP certifikátom (uvedené nižšie).\r\n \r\nNové IDP metadáta si môžete stiahnuť v predstihu už teraz, resp. používať na nasledujúcej linke: \r\n \r\n•      https://prihlasenie.slovensko.sk/oamfed/idp/metadata?signid=oidp_signing_p2&encid=oidp_encryption_p2\r\n \r\nPrípadne si ich môžete stiahnuť z prílohy tohto oznámenia. Metadáta budú na tejto linke dostupné počas celej životnosti „nového” X509 (IDP) certifikátu.\r\n \r\nVerejný certifikát k „novým” metadátam si môžete stiahnuť na nasledujúcej linke: \r\n \r\n•      https://prihlasenie.slovensko.sk/oamfed/idp/cert?id=oidp_signing_p2\r\n \r\n \r\nService Provideri, (ktorí budú chcieť) majú takto možnosť si v predstihu upraviť si svoju implementáciu a používať nové IDP metadáta.\r\n \r\nPokyny k vykonaniu úpravy IDP metadát na strane SP:\r\n \r\na)       Vytvoriť zálohu pôvodnej lokálnej kópie metadát (za účelom prípadného rollback-u).\r\nb)      Stiahnutie aktuálnych metadát z distribučnej URL IDP – viď. URL linka vyššie.\r\nc)       Urobiť import stiahnutých metadát do svojho lokálneho SP  \r\n(poznámka: Pokiaľ SP využíva saml framework, ktorý aktualizuje metadáta IDP automaticky (HTTP pooling), stačí iba skontrolovať, že k aktualizácii naozaj došlo).\r\nd)      Otestovanie úspešného vytvárania SAML requestov voči upravenému IDP prihlásenia cez IAM s novými metadátami.\r\n \r\nTouto cestou Vás ako integračných partnerov chceme požiadať, aby ste si po vyššie uvedenom dátume plánovanej úpravy v module IAM, upravili svoje aplikácie v zmysle pokynov a dôkladne si otestovali funkčnosť z pohľadu pôvodne využívanej funkcionality vrátane overenia Single Logout scenárov.\r\n \r\nV prípade akýchkoľvek otázok, resp. identifikovaní problémov, kontaktujte integracie@nases.gov.sk.\r\nK požiadavke identifikovanej predmetom relevantným k riešenému problému prosím, priložte log z prihlásenia exportovaný z aplikácie (SAML Tracer).\r\n \r\nPoznámka – zmena sa netýka integračných partnerov, ktorí využívajú len služby STS a GetIdentityService.\r\n \r\nĎakujeme za pochopenie,\r\n\r\n",
+      "start_date": "2021-12-02",
+      "due_date": "2021-12-29",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "18989.958333333332"
+        }
+      ],
+      "created_on": "2021-12-02T15:45:10Z",
+      "updated_on": "2022-01-21T14:32:53Z",
+      "closed_on": null
+    },
+    {
+      "id": 4758,
+      "project": {
+        "id": 303,
+        "name": "Scorabble Android"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 2,
+        "name": "In Progress"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Prechod na subscription monetizačný model",
+      "description": "Budeme meniť obchodný model aplikácie na subscription.\r\nNa sharepointe\r\nhttps://kios.sharepoint.com/:w:/s/Scorable/ETKSmAyKGMRAiXWfJBn7Yb4BIKv-vl5EjbZxhPyUOsJnqw?e=NDU7rA\r\n\r\nje uložený dokument s popisom potrebných úprav v aplikácii ohľadne prechodu na subscription model.\r\nDokument si treba preštudovať s porozumením a na základe neho implementovať novú funkcionalitu do aplikácie.\r\nDokument bol Adamom aktualizovaný 9.3.2022. Pribudli tam kapitoly\r\n\r\nZverejnenie tejto novej Android verzie bude synchronizované spolu s iOS verziou.\r\nTam majú ešte chalani robotu s prerábkou do SWIFTu.\r\nJe potrebné spraviť samostatný branch v gite.\r\n\r\nAktualizacia 10.3.2022\r\nPodľa dokumentu \r\nhttps://kios.sharepoint.com/:w:/s/Scorable/EQ6BUq45GmxLq9gmaKnvXwIB_IMWGu5QjMENE2XrqUqb_w?e=Qy6360\r\nkapitola 3, implementovať predaj slovníkov CSW2019 a CSW2015 každý za 3,49€\r\na predplatné podľa uvedených hodnôt v dokumente pre jednotlivé meny\r\n\r\n\r\n",
+      "start_date": "2022-01-13",
+      "due_date": "2022-01-25",
+      "done_ratio": 90,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 4,
+          "name": "Deployed date",
+          "internal_name": null,
+          "field_format": "date",
+          "value": ""
+        },
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19016.958333333332"
+        }
+      ],
+      "created_on": "2022-01-14T14:38:22Z",
+      "updated_on": "2022-03-24T11:08:48Z",
+      "closed_on": null
+    },
+    {
+      "id": 4860,
+      "project": {
+        "id": 303,
+        "name": "Scorabble Android"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 58,
+        "name": "Patrik Cápay"
+      },
+      "subject": "Firebase sledovanie eventov v subscription verzii",
+      "description": "spolu s Petrom treba ujednotit sledovanie eventov vo Firebase.\r\nObe verzie musia sledovat tie iste eventy, aby to malo nejaku vypovedaciu hodnotu.\r\n\r\nTaktiez treba ujednotit zobrazovanie oznamov pri prvom spustení a predaje ako slovnikov, tak aj predplatneho. Musi to vyzerat rovnako.",
+      "start_date": "2022-03-25",
+      "due_date": "2022-03-29",
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 4,
+          "name": "Deployed date",
+          "internal_name": null,
+          "field_format": "date",
+          "value": ""
+        },
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19079.916666666668"
+        }
+      ],
+      "created_on": "2022-03-25T08:45:17Z",
+      "updated_on": "2022-03-30T06:23:54Z",
+      "closed_on": null
+    },
+    {
+      "id": 4891,
+      "project": {
+        "id": 307,
+        "name": "Upgrade Výmena platobnej brány"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "status": {
+        "id": 3,
+        "name": "Resolved"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "assigned_to": {
+        "id": 64,
+        "name": "Peter Murín"
+      },
+      "subject": "Doplnenie kapitoly do používateľskej príručky",
+      "description": "v používateľských manuáloch pre VK a MA ekolok\r\n\r\nv adresároch\r\nt:\\klienti\\Slovenská pošta a.s\\eKolok\\Príručky\\MASP Virtuálny kiosk\\MASP_VK_Používateľský_manuál_verzia 2.5.docx\r\nt:\\klienti\\Slovenská pošta a.s\\eKolok\\Príručky\\MASP Mobilná aplikácia\\MASP_mobilná aplikácia_Používateľský_manuál_verzia 1.5.docx\r\n\r\n\r\ntreba doplniť kapitolu s popisom funkcionality v menu Ochrana osobných údajov",
+      "start_date": "2022-04-13",
+      "due_date": "2022-04-19",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19100.916666666668"
+        }
+      ],
+      "created_on": "2022-04-13T15:24:57Z",
+      "updated_on": "2022-04-25T07:44:20Z",
+      "closed_on": null
+    },
+    {
+      "id": 4977,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "Scorable porada",
+      "description": "",
+      "start_date": "2022-09-05",
+      "due_date": "2022-09-26",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19260.916666666668"
+        }
+      ],
+      "created_on": "2022-09-05T08:07:47Z",
+      "updated_on": "2022-09-26T08:10:26Z",
+      "closed_on": null
+    },
+    {
+      "id": 4897,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 22,
+        "name": "Eva Galliková",
+        "avatar_urls": {
+          "original": "/images/easy_images/easy_avatars/15/original/004.jpg?1415203570",
+          "large": "/images/easy_images/easy_avatars/15/large/004.jpg?1415203570",
+          "medium": "/images/easy_images/easy_avatars/15/medium/004.jpg?1415203570",
+          "small": "/images/easy_images/easy_avatars/15/small/004.jpg?1415203570"
+        }
+      },
+      "subject": "Umiestniť informáciu o používaní cookies v zmysle EU smernice na web a o info o prejdeni na subsciption model (Scorable)",
+      "description": "",
+      "start_date": "2022-04-25",
+      "due_date": "2022-10-03",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19267.916666666668"
+        }
+      ],
+      "created_on": "2022-04-25T08:40:42Z",
+      "updated_on": "2022-09-26T08:09:41Z",
+      "closed_on": null
+    },
+    {
+      "id": 4928,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "navrhnúť plán testovania a nasadzovania pre Scorable",
+      "description": "",
+      "start_date": "2022-05-30",
+      "due_date": "2022-10-03",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19267.916666666668"
+        }
+      ],
+      "created_on": "2022-05-30T09:10:42Z",
+      "updated_on": "2022-09-26T08:09:51Z",
+      "closed_on": null
+    },
+    {
+      "id": 4952,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "Odovzdať EG text pre subscription pre Scorabble",
+      "description": "",
+      "start_date": "2022-06-27",
+      "due_date": "2022-10-03",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19267.916666666668"
+        }
+      ],
+      "created_on": "2022-06-27T08:26:02Z",
+      "updated_on": "2022-09-26T08:09:59Z",
+      "closed_on": null
+    },
+    {
+      "id": 4986,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 10,
+        "name": "Viliam Vavro"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "preberaci protokol 365bank",
+      "description": "zabezpecit podpis preb protokolu za DFS pre 365 banku",
+      "start_date": "2022-09-12",
+      "due_date": "2022-10-03",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19267.916666666668"
+        }
+      ],
+      "created_on": "2022-09-12T14:21:10Z",
+      "updated_on": "2022-09-26T08:08:31Z",
+      "closed_on": null
+    },
+    {
+      "id": 4990,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "Zorganizovať jednanie s VPaS ohľadne rozšírenia objednávky",
+      "description": "",
+      "start_date": "2022-09-26",
+      "due_date": "2022-10-03",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19267.916666666668"
+        }
+      ],
+      "created_on": "2022-09-26T08:49:22Z",
+      "updated_on": "2022-09-26T08:49:22Z",
+      "closed_on": null
+    },
+    {
+      "id": 4823,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 7,
+        "name": "Úlohy z porady"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 10,
+        "name": "Viliam Vavro"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "doriešenie patentu prototypu novej BOJE",
+      "description": "mame k dispozicii ideovy zamer pre novy typ riecnej boje . jej hlavny prinos by mal byt uspora nakladov na prevadzku udrzbu plavebnej drahy. boja ma mat tvar ktory by odolaval plavajucim predmetom a menej casto by sa odtrhaval z retaze.\r\nuloha je zistit ci existuje OP, alebo statna podpora (SIEA ?) pre takuto inovativnu iniciativu. ak ano, predmetom by bolo boju technicku nakreslit , vyrobit a testovat.",
+      "start_date": "2022-02-18",
+      "due_date": "2022-10-17",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19281.916666666668"
+        }
+      ],
+      "created_on": "2022-02-18T12:41:43Z",
+      "updated_on": "2022-09-26T08:23:41Z",
+      "closed_on": null
+    },
+    {
+      "id": 4961,
+      "project": {
+        "id": 5,
+        "name": "Porady KIOS"
+      },
+      "tracker": {
+        "id": 6,
+        "name": "Mimoprojektové aktivity"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 12,
+        "name": "Andrea Zacharová"
+      },
+      "assigned_to": {
+        "id": 43,
+        "name": "Ivana Maštenová"
+      },
+      "subject": "Predjednať so Stocklom počet náhradných klávesníc na jednotlivé SPU",
+      "description": "",
+      "start_date": "2022-08-01",
+      "due_date": "2022-10-31",
+      "done_ratio": 0,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "19295.958333333332"
+        }
+      ],
+      "created_on": "2022-08-01T08:33:44Z",
+      "updated_on": "2022-09-26T08:07:42Z",
+      "closed_on": null
+    },
+    {
+      "id": 1236,
+      "project": {
+        "id": 163,
+        "name": "Vývoj SW - úlohy všeobecné"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "author": {
+        "id": 22,
+        "name": "Eva Galliková"
+      },
+      "subject": "Cas straveny nastavovanim prostredia",
+      "description": "Uloha na vykazovanie casu straveneho neproduktivne pri nastavovani vyvojoveho prostredia, projektu ap.",
+      "start_date": "2014-08-11",
+      "due_date": null,
+      "done_ratio": 100,
+      "is_private": false,
+      "is_favorited": false,
+      "estimated_hours": null,
+      "custom_fields": [
+        {
+          "id": 17,
+          "name": "ROZDIEL",
+          "internal_name": null,
+          "field_format": "easy_computed_token",
+          "value": "0.0"
+        }
+      ],
+      "created_on": "2014-08-11T06:50:38Z",
+      "updated_on": "2016-09-22T14:11:21Z",
+      "closed_on": null
+    }
+  ],
+  "total_count": 261,
+  "offset": 0,
+  "limit": 25
+}

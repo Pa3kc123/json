@@ -12,7 +12,9 @@ public final class Json {
     public static <T> T fromJson(String json, Class<T> cls) {
         try {
             final JsonTokener tokener = new JsonTokener(json.trim());
-            return (T)JsonParsers.get(cls).decode(tokener, cls);
+            return (T)JsonParsers
+                    .get(cls)
+                    .decode(tokener, cls);
         } catch (IOException e) {
             throw new JsonException(e);
         }

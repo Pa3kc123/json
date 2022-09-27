@@ -4,21 +4,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.Temporal;
+import java.util.Date;
 
+import sk.pa3kc.data2.IssueResponse;
 import sk.pa3kc.json.Json;
 
-class X {
-    public String[] lists;
-}
-
 public class Test {
-    public static void main(String[] args) throws Exception {
-        final String name = "test_get_about.json";
+    public static void main(String[] args) {
+        final String name = "issues_response.json";
 
         final String json = loadFile(name);
 
@@ -26,7 +26,7 @@ public class Test {
             return;
         }
 
-        final TestGetAbout tga = Json.fromJson(json, TestGetAbout.class);
+        final IssueResponse response = Json.fromJson(json, IssueResponse.class);
 
         System.out.println("Done");
     }

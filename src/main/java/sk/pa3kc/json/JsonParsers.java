@@ -3,6 +3,7 @@ package sk.pa3kc.json;
 import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import sk.pa3kc.json.parser.JsonDouble;
 import sk.pa3kc.json.parser.JsonFloat;
 import sk.pa3kc.json.parser.JsonInteger;
 import sk.pa3kc.json.parser.JsonIterable;
+import sk.pa3kc.json.parser.JsonLocalDate;
 import sk.pa3kc.json.parser.JsonLong;
 import sk.pa3kc.json.parser.JsonMap;
 import sk.pa3kc.json.parser.JsonNumber;
@@ -52,6 +54,7 @@ public class JsonParsers {
             super.put(Set.class, JsonSet.class);
             super.put(Iterable.class, JsonIterable.class);
             super.put(Map.class, JsonMap.class);
+            super.put(LocalDate.class, JsonLocalDate.class);
         }}
     );
 
@@ -134,12 +137,11 @@ public class JsonParsers {
             }
 
             for (int i = 0; i < this.index; i++) {
-                final Class<?> cls = this.keys[i];
+                Class<?> superCls = this.keys[i].getSuperclass();
+                while (superCls != null && indexOfKey(superCls) != -1)
+                    superCls = superCls.getSuperclass();
 
-                Class<?> superCls = key;
-                do superCls = superCls.getSuperclass(); while (superCls != null && indexOfKey(superCls) != -1);
-
-                if (superCls != null) {
+                if (!Object.class.equals(superCls)) {
                     return this.values[i];
                 }
             }
