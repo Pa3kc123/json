@@ -1,8 +1,9 @@
 package sk.pa3kc.data2;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
+
+import sk.pa3kc.json.ann.JsonKey;
 
 public class Issue {
     private Long id;
@@ -11,22 +12,33 @@ public class Issue {
     private User status;
     private User priority;
     private User author;
+    @JsonKey("assigned_to")
     private AssignedTo assignedTo;
     private String subject;
     private String description;
-    private LocalDate startDate;
-    private LocalDate dueDate;
+    @JsonKey("start_date")
+    private Date startDate;
+    @JsonKey("due_date")
+    private Date dueDate;
+    @JsonKey("done_ratio")
     private Long doneRatio;
+    @JsonKey("is_private")
     private Boolean isPrivate;
+    @JsonKey("is_favorited")
     private Boolean isFavorited;
-    private Object estimatedHours;
+    @JsonKey("estimated_hours")
+    private String estimatedHours;
+    @JsonKey("custom_fields")
     private List<CustomField> customFields;
-    private OffsetDateTime createdOn;
-    private OffsetDateTime updatedOn;
-    private Object closedOn;
+    @JsonKey("created_on")
+    private Date createdOn;
+    @JsonKey("updated_on")
+    private Date updatedOn;
+    @JsonKey("closed_on")
+    private Date closedOn;
 
-    public Long getID() { return id; }
-    public void setID(Long value) { this.id = value; }
+    public Long getId() { return id; }
+    public void setId(Long value) { this.id = value; }
 
     public User getProject() { return project; }
     public void setProject(User value) { this.project = value; }
@@ -52,11 +64,11 @@ public class Issue {
     public String getDescription() { return description; }
     public void setDescription(String value) { this.description = value; }
 
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate value) { this.startDate = value; }
+    public Date getStartDate() { return startDate; }
+    public void setStartDate(Date value) { this.startDate = value; }
 
-    public LocalDate getDueDate() { return dueDate; }
-    public void setDueDate(LocalDate value) { this.dueDate = value; }
+    public Date getDueDate() { return dueDate; }
+    public void setDueDate(Date value) { this.dueDate = value; }
 
     public Long getDoneRatio() { return doneRatio; }
     public void setDoneRatio(Long value) { this.doneRatio = value; }
@@ -67,18 +79,18 @@ public class Issue {
     public Boolean getIsFavorited() { return isFavorited; }
     public void setIsFavorited(Boolean value) { this.isFavorited = value; }
 
-    public Object getEstimatedHours() { return estimatedHours; }
-    public void setEstimatedHours(Object value) { this.estimatedHours = value; }
+    public String getEstimatedHours() { return estimatedHours; }
+    public void setEstimatedHours(String value) { this.estimatedHours = value; }
 
     public List<CustomField> getCustomFields() { return customFields; }
     public void setCustomFields(List<CustomField> value) { this.customFields = value; }
 
-    public OffsetDateTime getCreatedOn() { return createdOn; }
-    public void setCreatedOn(OffsetDateTime value) { this.createdOn = value; }
+    public Date getCreatedOn() { return createdOn; }
+    public void setCreatedOn(Date value) { this.createdOn = value; }
 
-    public OffsetDateTime getUpdatedOn() { return updatedOn; }
-    public void setUpdatedOn(OffsetDateTime value) { this.updatedOn = value; }
+    public Date getUpdatedOn() { return updatedOn; }
+    public void setUpdatedOn(Date value) { this.updatedOn = value; }
 
-    public Object getClosedOn() { return closedOn; }
-    public void setClosedOn(Object value) { this.closedOn = value; }
+    public Date getClosedOn() { return closedOn; }
+    public void setClosedOn(Date value) { this.closedOn = value; }
 }

@@ -11,6 +11,10 @@ public class JsonException extends RuntimeException {
         super(message);
     }
 
+    public JsonException(String message, int offset) {
+        super(message + " (At offset: " + offset + ")");
+    }
+
     public JsonException(String message, Throwable cause) {
         super(message, cause);
     }

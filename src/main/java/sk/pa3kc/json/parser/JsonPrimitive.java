@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
@@ -11,16 +12,15 @@ import sk.pa3kc.json.ReflectUtils;
 
 public class JsonPrimitive extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
 
         if (rawType == boolean.class) {
-            return tokener.readBoolOrNull();
+            return tokener.readBoolean();
         } else if (rawType == char.class) {
-            return tokener.nextClearChar();
+            return tokener.readString().charAt(0);
         } else {
             final String num = tokener.readNumber();
-            tokener.goBack();
 
             if (rawType == byte.class) {
                 return Byte.parseByte(num);

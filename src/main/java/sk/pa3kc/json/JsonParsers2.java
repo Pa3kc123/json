@@ -1,10 +1,8 @@
 package sk.pa3kc.json;
 
 import java.lang.ref.SoftReference;
-import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,8 +23,7 @@ import sk.pa3kc.json.parser.JsonDate;
 import sk.pa3kc.json.parser.JsonDouble;
 import sk.pa3kc.json.parser.JsonFloat;
 import sk.pa3kc.json.parser.JsonInteger;
-import sk.pa3kc.json.parser.JsonIterable;
-import sk.pa3kc.json.parser.JsonLocalDate;
+import sk.pa3kc.json.parser.JsonList;
 import sk.pa3kc.json.parser.JsonLong;
 import sk.pa3kc.json.parser.JsonMap;
 import sk.pa3kc.json.parser.JsonNumber;
@@ -83,20 +80,20 @@ public class JsonParsers2 {
 
     static final ParserRegister parsers = new ParserRegister(
         new LinkedHashMap<Class<?>, Class<? extends JsonParser>>() {{
-            super.put(Character.class, JsonCharacter.class);
             super.put(Boolean.class, JsonBoolean.class);
+            super.put(Character.class, JsonCharacter.class);
             super.put(Byte.class, JsonByte.class);
             super.put(Short.class, JsonShort.class);
             super.put(Integer.class, JsonInteger.class);
             super.put(Long.class, JsonLong.class);
             super.put(Float.class, JsonFloat.class);
             super.put(Double.class, JsonDouble.class);
-            super.put(String.class, JsonString.class);
+            super.put(CharSequence.class, JsonString.class);
             super.put(BigDecimal.class, JsonBigDecimal.class);
             super.put(BigInteger.class, JsonBigInteger.class);
             super.put(Number.class, JsonNumber.class);
             super.put(Set.class, JsonSet.class);
-            super.put(Iterable.class, JsonIterable.class);
+            super.put(Iterable.class, JsonList.class);
             super.put(Map.class, JsonMap.class);
             super.put(Date.class, JsonDate.class);
         }}

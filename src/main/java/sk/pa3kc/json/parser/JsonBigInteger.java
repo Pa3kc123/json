@@ -5,13 +5,14 @@ import java.lang.reflect.Type;
 import java.math.BigInteger;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
 
 public class JsonBigInteger extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
         return new BigInteger(tokener.readNumber());
     }
 

@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
 
 public class JsonBoolean extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        return tokener.readBoolOrNull();
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+        return Boolean.parseBoolean(tokener.readBoolean());
     }
 
     @Override

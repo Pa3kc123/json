@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonParsers;
@@ -13,7 +14,7 @@ import sk.pa3kc.json.JsonTokener;
 
 public class JsonSet extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
         return null;
     }
 

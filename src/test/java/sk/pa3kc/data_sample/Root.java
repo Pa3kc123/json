@@ -1,5 +1,7 @@
 package sk.pa3kc.data_sample;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.AbstractCollection;
@@ -50,37 +52,18 @@ public class Root {
     private Double doubleWrapper;
 
     // Frequently used
-    private String string;
-
-    private ArrayList<String> stringArrayList;
-    private LinkedList<String> stringLinkedList;
-
-    private HashSet<String> stringHashSet;
-    private LinkedHashSet<String> stringLinkedHashSet;
-
-    private HashMap<String, String> stringStringHashMap;
-    private LinkedHashMap<String, String> stringStringLinkedHashMap;
-
     private Date date;
     private LocalDate localDate;
     private OffsetDateTime offsetDateTime;
+
+    private BigInteger bigInteger;
+    private BigDecimal bigDecimal;
 
     // JDK Interfaces
     private CharSequence charSequence;
 
     private Iterable<String> stringIterable;
-    private Collection<String> stringCollection;
-    private List<String> stringList;
-    private Deque<String> stringDeque;
     private Queue<String> stringQueue;
     private Set<String> stringSet;
     private Map<String, String> stringStringMap;
-
-    // JDK Abstract classes
-    private Number number;
-    private AbstractCollection<String> stringAbstractCollection;
-    private AbstractList<String> stringAbstractList;
-    private AbstractSequentialList<String> stringAbstractSequentialList;
-    private AbstractSet<String> stringAbstractSet;
-    private AbstractMap<String, String> stringStringAbstractMap;
 }

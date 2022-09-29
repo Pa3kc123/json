@@ -5,14 +5,15 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
 
 public class JsonLocalDate extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        final String date = tokener.readString(false);
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+        final String date = tokener.readString();
         return LocalDate.parse(date);
     }
 

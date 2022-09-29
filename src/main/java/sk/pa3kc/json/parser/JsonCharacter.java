@@ -4,17 +4,18 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
 
 public class JsonCharacter extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        final String str = tokener.readString(false);
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+        final String str = tokener.readString();
 
         if (str.length() != 1) {
-            throw new JsonException("Not a char");
+            throw new JsonException("Not a char", tokener.getOffset());
         }
 
         return str.charAt(0);

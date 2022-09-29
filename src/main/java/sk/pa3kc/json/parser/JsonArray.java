@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonParsers;
@@ -13,11 +14,11 @@ import sk.pa3kc.json.ReflectUtils;
 
 public final class JsonArray extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
 
         if (!rawType.isArray()) {
-            throw new JsonException("Invalid type");
+            throw new JsonException("Invalid type", tokener.getOffset());
         }
 
         return null;

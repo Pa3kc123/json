@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonParsers;
@@ -18,7 +19,7 @@ import sk.pa3kc.json.ReflectUtils;
 
 public class JsonMap extends JsonParser {
     @Override
-    public @NotNull Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
         if (!(cls instanceof ParameterizedType)) {
             throw new JsonException("Invalid type " + cls.getTypeName());
         }
@@ -28,7 +29,7 @@ public class JsonMap extends JsonParser {
         final Type[] genTypes = pt.getActualTypeArguments();
 
         if (genTypes.length != 2) {
-            throw new JsonException("Missing value type");
+            throw new JsonException("Missing value type", tokener.getOffset());
         }
 
         final Type valueType = genTypes[1];
@@ -47,14 +48,14 @@ public class JsonMap extends JsonParser {
         char c = tokener.nextClearChar();
 
         if (c != '{') {
-            throw new JsonException("Not a map");
+            throw new JsonException("Not a map", tokener.getOffset());
         }
 
         do {
-            final String key = tokener.readString(false);
+            final String key = tokener.readString();
 
             if (tokener.nextClearChar() != ':') {
-                throw new JsonException("Missing colon");
+                throw new JsonException("Missing colon", tokener.getOffset());
             }
 
             res.put(
