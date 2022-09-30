@@ -3,6 +3,9 @@ package sk.pa3kc.json;
 import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,15 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import sk.pa3kc.json.parser.JsonArray;
 import sk.pa3kc.json.parser.JsonBigDecimal;
 import sk.pa3kc.json.parser.JsonBigInteger;
-import sk.pa3kc.json.parser.JsonBoolean;
-import sk.pa3kc.json.parser.JsonByte;
 import sk.pa3kc.json.parser.JsonCharacter;
 import sk.pa3kc.json.parser.JsonDate;
-import sk.pa3kc.json.parser.JsonDouble;
-import sk.pa3kc.json.parser.JsonFloat;
-import sk.pa3kc.json.parser.JsonInteger;
 import sk.pa3kc.json.parser.JsonList;
-import sk.pa3kc.json.parser.JsonLong;
 import sk.pa3kc.json.parser.JsonMap;
 import sk.pa3kc.json.parser.JsonNumber;
 import sk.pa3kc.json.parser.JsonObject;
@@ -32,31 +29,37 @@ import sk.pa3kc.json.parser.JsonParser;
 import sk.pa3kc.json.parser.JsonPrimitive;
 import sk.pa3kc.json.parser.JsonQueue;
 import sk.pa3kc.json.parser.JsonSet;
-import sk.pa3kc.json.parser.JsonShort;
 import sk.pa3kc.json.parser.JsonString;
 
-@SuppressWarnings("unchecked")
 public class JsonParsers {
     private static final Map<Class<?>, SoftReference<? extends JsonParser>> instances = new LinkedHashMap<>();
 
-    static final HashMap<Class<?>, Class<? extends JsonParser>> parsers = new HashMap<>(
+    private static final Collection<Class<?>> wrapperTypes = Collections.unmodifiableCollection(Arrays.asList(
+        Boolean.class,
+        Byte.class,
+        Short.class,
+        Integer.class,
+        Long.class,
+        Float.class,
+        Double.class
+    ));
+
+    static final Map<Class<?>, Class<? extends JsonParser>> parsers = new HashMap<>(
         new LinkedHashMap<Class<?>, Class<? extends JsonParser>>() {{
+            super.put(char.class, JsonCharacter.class);
             super.put(Character.class, JsonCharacter.class);
-            super.put(Boolean.class, JsonBoolean.class);
-            super.put(Byte.class, JsonByte.class);
-            super.put(Short.class, JsonShort.class);
-            super.put(Integer.class, JsonInteger.class);
-            super.put(Long.class, JsonLong.class);
-            super.put(Float.class, JsonFloat.class);
-            super.put(Double.class, JsonDouble.class);
+            super.put(CharSequence.class, JsonString.class);
             super.put(String.class, JsonString.class);
+
+            super.put(Number.class, JsonNumber.class);
             super.put(BigDecimal.class, JsonBigDecimal.class);
             super.put(BigInteger.class, JsonBigInteger.class);
-            super.put(Number.class, JsonNumber.class);
+
             super.put(Set.class, JsonSet.class);
             super.put(List.class, JsonList.class);
             super.put(Queue.class, JsonQueue.class);
             super.put(Map.class, JsonMap.class);
+
             super.put(Date.class, JsonDate.class);
         }}
     );
@@ -71,14 +74,14 @@ public class JsonParsers {
 
     @NotNull
     public static <T> JsonParser get(Class<T> cls) throws JsonException {
-        Class<? extends JsonParser> parserCls = parsers.get(cls);
-
-        if (parserCls == null) {
-            if (cls.isArray()) {
-                parserCls = JsonArray.class;
-            } else if (cls.isPrimitive()) {
-                parserCls = JsonPrimitive.class;
-            } else {
+        Class<? extends JsonParser> parserCls;
+        if (cls.isPrimitive() || wrapperTypes.contains(cls)) {
+            parserCls = JsonPrimitive.class;
+        } else if (cls.isArray()) {
+            parserCls = JsonArray.class;
+        } else {
+            parserCls = parsers.get(cls);
+            if (parserCls == null) {
                 parserCls = JsonObject.class;
             }
         }
@@ -95,13 +98,5 @@ public class JsonParsers {
         final JsonParser inst = ReflectUtils.createInstance(parserCls);
         instances.put(cls, new SoftReference<>(inst));
         return inst;
-    }
-
-    public static JsonObject getObjectParser() throws JsonException {
-        return new JsonObject();
-    }
-
-    public static JsonArray getArrayParser() throws JsonException {
-        return new JsonArray();
     }
 }

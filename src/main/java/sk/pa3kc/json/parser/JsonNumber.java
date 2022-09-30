@@ -11,8 +11,12 @@ import sk.pa3kc.json.JsonTokener;
 
 public class JsonNumber extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         final String num = tokener.readNumber();
+
+        if (num == null) {
+            return null;
+        }
 
         if (num.indexOf('.') != -1) {
             return Double.parseDouble(num);
@@ -22,11 +26,7 @@ public class JsonNumber extends JsonParser {
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
-        if (!(value instanceof Number)) {
-            throw new JsonException("Not a number");
-        }
-
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append(value);
     }
 }

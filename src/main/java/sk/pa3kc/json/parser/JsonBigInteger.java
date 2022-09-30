@@ -12,16 +12,13 @@ import sk.pa3kc.json.JsonTokener;
 
 public class JsonBigInteger extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        return new BigInteger(tokener.readNumber());
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
+        final String val = tokener.readNumber();
+        return val != null ? new BigInteger(val) : null;
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
-        if (!(value instanceof BigInteger)) {
-            throw new JsonException("Not a big integer");
-        }
-
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append(value);
     }
 }

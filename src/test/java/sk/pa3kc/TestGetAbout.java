@@ -12,9 +12,12 @@ import sk.pa3kc.data.DriveTheme;
 import sk.pa3kc.data.StorageQuota;
 import sk.pa3kc.data.User;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-public @Data class TestGetAbout {
+@Getter
+@Setter
+public class TestGetAbout {
     private String kind;
     private User user;
     private StorageQuota storageQuota;

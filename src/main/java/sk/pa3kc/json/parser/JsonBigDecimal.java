@@ -12,16 +12,13 @@ import sk.pa3kc.json.JsonTokener;
 
 public class JsonBigDecimal extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        return new BigDecimal(tokener.readNumber());
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
+        final String val = tokener.readNumber();
+        return val != null ? new BigDecimal(val) : null;
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
-        if (!(value instanceof BigDecimal)) {
-            throw new JsonException("Not a big decimal");
-        }
-
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append(value);
     }
 }

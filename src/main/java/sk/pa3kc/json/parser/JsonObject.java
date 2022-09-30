@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,26 +16,33 @@ import sk.pa3kc.json.JsonParsers;
 import sk.pa3kc.json.JsonTokener;
 import sk.pa3kc.json.ReflectUtils;
 import sk.pa3kc.json.ann.JsonOptions;
+import sk.pa3kc.json.ann.JsonValueFormat;
 
 public class JsonObject extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
+
+        if (Object.class.equals(rawType)) {
+            //TODO
+            return null;
+        }
 
         final JsonOptions options = rawType.getAnnotation(JsonOptions.class);
 
         if (rawType.isEnum()) {
-            final String str = tokener.readString().toUpperCase(Locale.ROOT).replaceAll("\\s", "_");
-            for (Field f : rawType.getFields()) {
-                if (str.equals(f.getName())) {
-                    try {
-                        return f.get(null);
-                    } catch (IllegalAccessException e) {
-                        throw new JsonException("Unable to access " + rawType.getCanonicalName() + "#" + f.getName(), tokener.getOffset());
-                    }
-                }
+            final String str = tokener.readString();
+
+            if (str == null) {
+                return null;
             }
-            throw new JsonException("Invalid enum value '" + str + '\'', tokener.getOffset());
+
+            try {
+                final Method decoder = rawType.getMethod("forValue", String.class);
+                return decoder.invoke(null, str);
+            } catch (ReflectiveOperationException e) {
+                throw new JsonException("Unable to decode " + rawType.getCanonicalName(), e);
+            }
         }
 
         final Map<String, Field> fields = ReflectUtils.getFields(rawType, options);
@@ -66,6 +71,8 @@ public class JsonObject extends JsonParser {
                     tokener.skip();
                 }
             } else {
+                final JsonValueFormat extra = field.getAnnotation(JsonValueFormat.class);
+
                 final Type fieldType = field.getGenericType();
                 final Class<?> fieldCls = ReflectUtils.getClassFromType(fieldType);
 
@@ -76,10 +83,14 @@ public class JsonObject extends JsonParser {
                         instance,
                         JsonParsers
                             .get(fieldCls)
-                            .decode(tokener, fieldType)
+                            .decode(tokener, fieldType, extra)
                     );
-                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                    throw new JsonException("Error while invoking " + rawType.getCanonicalName() + '#' + setter.getName(), e);
+                } catch (IllegalAccessException e) {
+                    throw new JsonException("Invalid access to " + fieldCls.getCanonicalName() + "#" + setter.getName());
+                } catch (IllegalArgumentException e) {
+                    throw new JsonException("Getter " + fieldCls.getCanonicalName() + "#" + setter.getName() + " must have no arguments");
+                } catch (InvocationTargetException e) {
+                    throw new JsonException("Getter " + fieldCls.getCanonicalName() + "#" + setter.getName() + " threw and exception");
                 }
             }
 
@@ -93,10 +104,20 @@ public class JsonObject extends JsonParser {
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         final Class<?> cls = value.getClass();
 
         final JsonOptions options = cls.getAnnotation(JsonOptions.class);
+
+        if (cls.isEnum()) {
+            try {
+                final Method encoder = cls.getMethod("toValue");
+                output.append('"').append(encoder.invoke(value)).append('"');
+                return;
+            } catch (ReflectiveOperationException e) {
+                throw new JsonException("Unable to encode " + cls.getCanonicalName(), e);
+            }
+        }
 
         final Map<String, Field> fields = ReflectUtils.getFields(cls, options);
 
@@ -105,12 +126,10 @@ public class JsonObject extends JsonParser {
         final Iterator<String> keys = fields.keySet().iterator();
         while (keys.hasNext()) {
             final String key = keys.next();
+            final Field field = fields.get(key);
+            final JsonValueFormat jvf = field.getAnnotation(JsonValueFormat.class);
 
-            JsonParsers.get(String.class).encode(key, output);
-
-            final Field val = fields.get(key);
-
-            final Method getter = ReflectUtils.getGetter(cls, val);
+            final Method getter = ReflectUtils.getGetter(cls, field);
 
             Object getterValue;
             try {
@@ -123,7 +142,13 @@ public class JsonObject extends JsonParser {
                 throw new JsonException("Getter " + cls.getCanonicalName() + "#" + getter.getName() + " threw and exception");
             }
 
-            JsonParsers.get(val.getType()).encode(getterValue, output);
+            if (getterValue == null) {
+                continue;
+            }
+
+            JsonParsers.get(String.class).encode(key, output, null);
+            output.append(':');
+            JsonParsers.get(field.getType()).encode(getterValue, output, jvf);
 
             if (keys.hasNext()) {
                 output.append(',');

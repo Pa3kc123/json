@@ -10,6 +10,6 @@ import sk.pa3kc.json.JsonException;
 import sk.pa3kc.json.JsonTokener;
 
 public abstract class JsonParser {
-    public abstract @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException;
-    public abstract void encode(@NotNull Object value, @NotNull StringBuilder output);
+    public abstract @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException;
+    public abstract void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException;
 }

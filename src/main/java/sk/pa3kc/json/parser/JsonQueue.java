@@ -17,19 +17,11 @@ import sk.pa3kc.json.ReflectUtils;
 
 public class JsonQueue extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
         final Type[] genTypes = ReflectUtils.getGenericTypesFromType(cls);
 
-        final Queue list;
-        if (Modifier.isAbstract(rawType.getModifiers())) {
-            list = new LinkedList<>();
-        } else if (Modifier.isInterface(rawType.getModifiers())) {
-            list = new LinkedList<>();
-        } else {
-            list = (Queue<?>)ReflectUtils.createInstance(rawType);
-        }
-
+        final Queue<? super Object> list = (rawType.getModifiers() & (Modifier.ABSTRACT|Modifier.INTERFACE)) == 0 ? (Queue<? super Object>)ReflectUtils.createInstance(rawType) : new LinkedList<>();
         char c = tokener.nextClearChar();
 
         if (c != '[') {
@@ -40,7 +32,7 @@ public class JsonQueue extends JsonParser {
             list.add(
                 JsonParsers
                     .get(ReflectUtils.getClassFromType(genTypes[0]))
-                    .decode(tokener, genTypes[0])
+                    .decode(tokener, genTypes[0], null)
             );
             c = tokener.nextClearChar();
 
@@ -53,11 +45,7 @@ public class JsonQueue extends JsonParser {
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
-        if (!(value instanceof Queue)) {
-            throw new JsonException("Not a queue");
-        }
-
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append('[');
 
         final Iterator<?> vals = ((Queue<?>)value).iterator();
@@ -65,7 +53,7 @@ public class JsonQueue extends JsonParser {
             final Object val = vals.next();
             final Class<?> valClass = val.getClass();
 
-            JsonParsers.get(valClass).encode(val, output);
+            JsonParsers.get(valClass).encode(val, output, null);
 
             if (vals.hasNext()) {
                 output.append(',');

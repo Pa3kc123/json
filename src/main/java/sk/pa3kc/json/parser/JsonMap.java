@@ -19,7 +19,7 @@ import sk.pa3kc.json.ReflectUtils;
 
 public class JsonMap extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         if (!(cls instanceof ParameterizedType)) {
             throw new JsonException("Invalid type " + cls.getTypeName());
         }
@@ -62,7 +62,7 @@ public class JsonMap extends JsonParser {
                 key,
                 JsonParsers
                     .get(valueCls)
-                    .decode(tokener, valueType)
+                    .decode(tokener, valueType, null)
             );
 
             c = tokener.nextClearChar();
@@ -73,11 +73,7 @@ public class JsonMap extends JsonParser {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
-        if (!(value instanceof Map)) {
-            throw new JsonException("Not a map");
-        }
-
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append('{');
 
         final Map<String, ?> map = (Map<String, ?>)value;
@@ -90,7 +86,7 @@ public class JsonMap extends JsonParser {
             final Object val = map.get(key);
             final Class<?> valClass = val.getClass();
 
-            JsonParsers.get(valClass).encode(value, output);
+            JsonParsers.get(valClass).encode(value, output, null);
 
             if (keys.hasNext()) {
                 output.append(',');

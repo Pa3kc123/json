@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.jetbrains.annotations.Nullable;
+
 public class JsonTokener {
     private final Reader reader;
     private boolean steppedBack = false;
@@ -20,6 +22,9 @@ public class JsonTokener {
 
     public int getOffset() {
         return this.offset;
+    }
+    public void stepBack() {
+        this.steppedBack = true;
     }
 
     public char nextChar() throws IOException {
@@ -45,6 +50,7 @@ public class JsonTokener {
         return this.currChar == 'n' && this.nextChar() == 'u' && this.nextChar() == 'l' && this.nextChar() == 'l';
     }
 
+    @Nullable
     public String readString() throws IOException {
         char c = this.nextClearChar();
         if (c != '"') {
@@ -101,6 +107,7 @@ public class JsonTokener {
         return builder.toString();
     }
 
+    @Nullable
     public String readNumber() throws IOException {
         char c = this.nextClearChar();
 
@@ -134,6 +141,7 @@ public class JsonTokener {
         return builder.toString();
     }
 
+    @Nullable
     public String readBoolean() throws IOException {
         char c = nextClearChar();
 
@@ -235,16 +243,7 @@ public class JsonTokener {
     }
     private void skipNumber() throws IOException {
         char c;
-        do c = nextChar(); while (Character.isDigit(c));
-
-        if (c == '.') {
-            do c = nextChar(); while (Character.isDigit(c));
-        }
-
-        if (c == 'e' || c == 'E') {
-            do c = nextChar(); while (Character.isDigit(c));
-        }
-
+        do c = nextChar(); while (Character.isDigit(c) || c == '.' || c == 'e' || c == 'E');
         this.steppedBack = true;
     }
     private void skipBoolean() throws IOException {
@@ -283,7 +282,7 @@ public class JsonTokener {
                     skipBoolean();
                 } else if (c == 'n') {
                     skipNull();
-                } else if (Character.isDigit(c)) {
+                } else if (c == '-' || Character.isDigit(c)) {
                     this.steppedBack = true;
                     skipNumber();
                 } else {

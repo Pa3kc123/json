@@ -11,18 +11,31 @@ import sk.pa3kc.json.JsonTokener;
 
 public class JsonCharacter extends JsonParser {
     @Override
-    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls) throws IOException, JsonException {
-        final String str = tokener.readString();
+    public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
+        char c = tokener.nextClearChar();
 
-        if (str.length() != 1) {
-            throw new JsonException("Not a char", tokener.getOffset());
+        if (c == '"') {
+            tokener.stepBack();
+            final String res = tokener.readString();
+            if (res.length() != 1) {
+                throw new JsonException("Invalid symbol", tokener.getOffset());
+            }
+            return res.charAt(0);
+        } else if (c == '-' || Character.isDigit(c)) {
+            tokener.stepBack();
+            final String res = tokener.readNumber();
+            try {
+                return (char)Integer.parseInt(res, 10);
+            } catch (NumberFormatException e) {
+                throw new JsonException("Invalid symbol", tokener.getOffset());
+            }
+        } else {
+            throw new JsonException("Invalid symbol", tokener.getOffset());
         }
-
-        return str.charAt(0);
     }
 
     @Override
-    public void encode(@NotNull Object value, @NotNull StringBuilder output) {
+    public void encode(@NotNull Object value, @NotNull StringBuilder output, @Nullable Object extras) throws JsonException {
         output.append('"').append(value).append('"');
     }
 }
