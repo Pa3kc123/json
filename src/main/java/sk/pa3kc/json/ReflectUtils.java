@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +97,13 @@ public final class ReflectUtils {
 
     @NotNull
     public static Method getGetter(Class<?> cls, String fieldName, Class<?> fieldType) throws NoSuchFieldException, NoSuchMethodException {
-        final String getterName = (fieldType == boolean.class ? "is" : "get") + Utils.capitalize(fieldName);
+        if (fieldName.startsWith("is")) {
+            try {
+                return cls.getMethod(fieldName);
+            } catch (NoSuchMethodException ignored) { }
+        }
+
+        final String getterName = "get" + Utils.capitalize(fieldName);
         try {
             return cls.getMethod(getterName);
         } catch (NoSuchMethodException e) {
@@ -105,7 +112,13 @@ public final class ReflectUtils {
     }
     @NotNull
     public static Method getGetter(Class<?> cls, Field field) throws JsonException {
-        final String getterName = (field.getType() == boolean.class ? "is" : "get") + Utils.capitalize(field.getName());
+        if (field.getName().startsWith("is")) {
+            try {
+                return cls.getMethod(field.getName());
+            } catch (NoSuchMethodException ignored) { }
+        }
+
+        final String getterName = "get" + Utils.capitalize(field.getName());
         try {
             return cls.getMethod(getterName);
         } catch (NoSuchMethodException e) {
@@ -115,7 +128,13 @@ public final class ReflectUtils {
 
     @NotNull
     public static Method getSetter(Class<?> cls, String fieldName, Class<?> paramCls) throws NoSuchFieldException, NoSuchMethodException {
-        final String setterName = "set" + Utils.capitalize(fieldName);
+        final String setterName;
+        if (fieldName.startsWith("is")) {
+            setterName = "set" + fieldName.substring(2);
+        } else {
+            setterName = "set" + Utils.capitalize(fieldName);
+        }
+
         try {
             return cls.getMethod(setterName, paramCls);
         } catch (NoSuchMethodException e) {
@@ -124,7 +143,13 @@ public final class ReflectUtils {
     }
     @NotNull
     public static Method getSetter(Class<?> cls, Field field) throws JsonException {
-        final String setterName = "set" + Utils.capitalize(field.getName());
+        final String setterName;
+        if (field.getName().startsWith("is")) {
+            setterName = "set" + field.getName().substring(2);
+        } else {
+            setterName = "set" + Utils.capitalize(field.getName());
+        }
+
         try {
             return cls.getMethod(setterName, field.getType());
         } catch (NoSuchMethodException e) {
@@ -141,6 +166,10 @@ public final class ReflectUtils {
         } else if (type instanceof GenericArrayType) {
             final GenericArrayType gat = (GenericArrayType)type;
             return Array.newInstance(getClassFromType(gat.getGenericComponentType()),0).getClass();
+        } else if (type instanceof WildcardType) {
+            // TODO: Add at least some support for wildcard
+            // final WildcardType wt = (WildcardType)type;
+            return null;
         } else {
             throw new IllegalArgumentException("Type " + type.getTypeName() + " has unsupported type (" + type.getClass().getCanonicalName() + ")");
         }

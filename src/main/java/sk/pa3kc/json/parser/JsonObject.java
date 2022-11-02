@@ -24,7 +24,7 @@ public class JsonObject extends JsonParser {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
 
         if (Object.class.equals(rawType)) {
-            //TODO
+            tokener.skip();
             return null;
         }
 

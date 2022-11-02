@@ -18,6 +18,7 @@ import sk.pa3kc.json.JsonTokener;
 import sk.pa3kc.json.ReflectUtils;
 
 public class JsonMap extends JsonParser {
+    @SuppressWarnings("unchecked")
     @Override
     public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         if (!(cls instanceof ParameterizedType)) {
@@ -35,14 +36,14 @@ public class JsonMap extends JsonParser {
         final Type valueType = genTypes[1];
         final Class<?> valueCls = ReflectUtils.getClassFromType(valueType);
 
-        final Map res;
+        final Map<String, ? super Object> res;
 
         if (Modifier.isInterface(rawType.getModifiers()) && Map.class.equals(rawType)) {
             res = new LinkedHashMap<String, Object>();
         } else if (Modifier.isAbstract(rawType.getModifiers()) && AbstractMap.class.equals(rawType)) {
             res = new LinkedHashMap<String, Object>();
         } else {
-            res = (Map)ReflectUtils.createInstance(rawType);
+            res = (Map<String, ? super Object>)ReflectUtils.createInstance(rawType);
         }
 
         char c = tokener.nextClearChar();

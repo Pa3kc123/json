@@ -16,6 +16,7 @@ import sk.pa3kc.json.JsonTokener;
 import sk.pa3kc.json.ReflectUtils;
 
 public class JsonSet extends JsonParser {
+    @SuppressWarnings("unchecked")
     @Override
     public @Nullable Object decode(@NotNull JsonTokener tokener, @NotNull Type cls, @Nullable Object extras) throws IOException, JsonException {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);

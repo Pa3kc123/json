@@ -16,9 +16,14 @@ public class JsonPrimitive extends JsonParser {
         final Class<?> rawType = ReflectUtils.getClassFromType(cls);
 
         if (rawType == boolean.class || rawType == Boolean.class) {
-            return Boolean.parseBoolean(tokener.readBoolean());
+            final String bool = tokener.readBoolean();
+            return bool != null ? Boolean.parseBoolean(bool) : bool;
         } else {
             final String num = tokener.readNumber();
+
+            if (num == null) {
+                return null;
+            }
 
             if (rawType == byte.class || rawType == Byte.class) {
                 return Byte.parseByte(num);
